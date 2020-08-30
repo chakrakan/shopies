@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { Page } from "@shopify/polaris";
+import "@shopify/polaris/dist/styles.css";
+import "./App.css";
+import Movie from "./components/Movie";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class App extends React.Component {
+  render() {
+    return (
+      <Page title="The Shopies">
+        <Movie
+          Title="Alien"
+          Poster="https://m.media-amazon.com/images/M/MV5BMmQ2MmU3NzktZjAxOC00ZDZhLTk4YzEtMDMyMzcxY2IwMDAyXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
+          Year="1979"
+          Genre="Horror, Sci-Fi"
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        </Movie>
+      </Page>
+    );
+  }
 }
 
 export default App;
