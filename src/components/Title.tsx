@@ -1,26 +1,7 @@
 import * as React from "react";
 import { Layout, Thumbnail, Badge, Caption } from "@shopify/polaris";
-
-/**
- * Movie interface for data from API
- */
-export interface ITitleData {
-  Title: string;
-  Year: string;
-  imdbID: string;
-  Type: string;
-  Poster: string;
-}
-
-/**
- * Contract interface for the component
- */
-export interface ITitle {
-  Title: string;
-  Year: string;
-  Poster: string;
-  Type: string;
-}
+import { ITitleData } from "../types/Title";
+import NoImg from "../assets/no-img.png";
 
 /**
  * Representation of a Movie within our App
@@ -30,21 +11,26 @@ export interface ITitle {
  *
  * The image is low res enough to warrant no further optimization for load times
  */
-const Title: React.SFC<ITitle> = ({ Title, Year, Poster, Type }) => {
-  const noPosterDefault = "https://us.bgxme.com/images/no-img.png";
+const Title: React.SFC<ITitleData> = ({
+  Title,
+  Year,
+  imdbID,
+  Poster,
+  Type,
+}) => {
   return (
     <Layout sectioned={true}>
-      <Layout.Section>
+      <Layout.Section oneHalf>
         <Thumbnail
-          source={Poster !== "N/A" ? Poster : noPosterDefault}
+          source={Poster !== "N/A" ? Poster : NoImg}
           alt={Title}
           size="large"
         ></Thumbnail>
       </Layout.Section>
-      <Layout.Section>
+      <Layout.Section oneHalf>
+        <Badge>{Type}</Badge>
         <Caption>{Title}</Caption>
         <Caption>({Year})</Caption>
-        <Badge>{Type}</Badge>
       </Layout.Section>
     </Layout>
   );

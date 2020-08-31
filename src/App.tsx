@@ -3,15 +3,13 @@ import { Page } from "@shopify/polaris";
 import "@shopify/polaris/dist/styles.css";
 import "./App.css";
 import Footer from "./components/Footer";
-import ResultList from "./components/ResultList";
-import SearchBox from "./components/SearchBox";
+import Context from "./components/Context";
 
 class App extends React.Component {
   render() {
     return (
       <Page title="The Shopies">
-        <SearchBox></SearchBox>
-        <ResultList></ResultList>
+        <Context></Context>
         <Footer></Footer>
       </Page>
     );
