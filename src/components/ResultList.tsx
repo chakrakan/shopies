@@ -7,6 +7,7 @@ import {
   Icon,
   Layout,
   Button,
+  Banner,
 } from "@shopify/polaris";
 import Title from "./Title";
 import { ITitleData } from "../types/Title";
@@ -24,6 +25,13 @@ const ResultList = ({ titles, nominations }: IResultList) => {
     <></>
   ) : (
     <Card sectioned>
+      <TextContainer>
+        {nominations.length === 5 ? (
+          <Banner status="success">
+            <p>You have nominated 5 movies!</p>
+          </Banner>
+        ) : undefined}
+      </TextContainer>
       <TextContainer>
         <DisplayText>
           <Icon source={RecentSearchesMajorMonotone} />

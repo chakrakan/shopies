@@ -3,7 +3,7 @@ import { Page } from "@shopify/polaris";
 import "@shopify/polaris/dist/styles.css";
 import "./App.css";
 import Footer from "./components/Footer";
-import Context from "./components/Context";
+import Context from "./containers/Context";
 
 class App extends React.Component {
   render() {

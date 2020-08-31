@@ -1,8 +1,8 @@
 import React from "react";
 import { Layout } from "@shopify/polaris";
-import ResultList from "./ResultList";
-import SearchBox from "./SearchBox";
-import NominationList from "./NominationList";
+import ResultList from "../components/ResultList";
+import SearchBox from "../components/SearchBox";
+import NominationList from "../components/NominationList";
 
 /**
  * This will hold the context for the child Componenets
@@ -49,6 +49,22 @@ const Context = () => {
 
   // nominations mock data
   const mockNominationData = [
+    {
+      Title: "Ram Balram",
+      Year: "1980",
+      imdbID: "tt0081401",
+      Type: "movie",
+      Poster:
+        "https://m.media-amazon.com/images/M/MV5BMTY0MTk0MTM3MV5BMl5BanBnXkFtZTcwOTIyNDE0MQ@@._V1_SX300.jpg",
+    },
+    {
+      Title: "Ram Balram",
+      Year: "1980",
+      imdbID: "tt0081401",
+      Type: "movie",
+      Poster:
+        "https://m.media-amazon.com/images/M/MV5BMTY0MTk0MTM3MV5BMl5BanBnXkFtZTcwOTIyNDE0MQ@@._V1_SX300.jpg",
+    },
     {
       Title: "Ram Balram",
       Year: "1980",
