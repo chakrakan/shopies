@@ -38,8 +38,32 @@ const ResultList = ({
     setNominations([...nominations, nominatedTitle]);
   };
 
-  return !searchData?.length ? (
+  return !searchData && currentTitle.length < 1 ? (
     <></>
+  ) : searchData === null && currentTitle.length ? (
+    <Card
+      title={
+        isLoading && isCalled ? (
+          <Spinner
+            accessibilityLabel="Loading search results"
+            size="large"
+            color="teal"
+          ></Spinner>
+        ) : (
+          `Search Results for ${currentTitle}`
+        )
+      }
+      sectioned
+    >
+      <Card.Section title="Info">
+        <TextStyle variation="subdued">
+          <span role="img" aria-label="clapper-board">
+            🎬
+          </span>{" "}
+          Sorry, no movies with that title found :(<br></br>
+        </TextStyle>
+      </Card.Section>
+    </Card>
   ) : (
     <Card
       title={
@@ -69,15 +93,15 @@ const ResultList = ({
             🎬
           </span>{" "}
           Click on a movie title to find out more about it on IMDB<br></br>
-          <span role="img" aria-label="clapper-board">
+          <span role="img" aria-label="trophy">
             🏆
           </span>{" "}
-          Pick upto 5 nominations
+          You can nominate 5 movies!
         </TextStyle>
       </Card.Section>
 
       <Card.Section title="Titles">
-        {searchData.map((title: ITitleData) => (
+        {searchData?.map((title: ITitleData) => (
           <ResourceItem
             key={title.imdbID}
             id={title.imdbID}
