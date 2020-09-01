@@ -4,32 +4,35 @@ import ResultList from "../components/ResultList";
 import SearchBox from "../components/SearchBox";
 import NominationList from "../components/NominationList";
 import { SEARCH_TITLE } from "../gql/Queries";
-import { useQuery } from "@apollo/client";
-import { ITitleData, ITitleSearchVar, ITitleSearchData } from "../types/Title";
+import { useLazyQuery } from "@apollo/client";
+import { ITitleData } from "../types/Title";
+
 /**
  * This will hold the context for the child Componenets
  */
 const Context = () => {
   const [title, setTitle] = useState("");
   const [nominations, setNomination] = useState<Array<ITitleData>>([]);
-  const { loading, error, data } = useQuery<ITitleSearchData, ITitleSearchVar>(
-    SEARCH_TITLE,
-    {
-      variables: { s: title },
-    }
+  const [refetch, { called, loading, data: searchData }] = useLazyQuery(
+    SEARCH_TITLE
   );
-  console.log(title, loading, error, data?.titles.Search);
+
+  console.log(title, called, loading, searchData?.titles.Search);
 
   return (
     <Layout sectioned={true}>
       <Layout.Section>
-        <SearchBox title={title} setTitle={setTitle}></SearchBox>
+        <SearchBox
+          title={title}
+          setTitle={setTitle}
+          refetch={refetch}
+        ></SearchBox>
       </Layout.Section>
       <Layout.Section oneHalf>
         <ResultList
           currentTitle={title}
           isLoading={loading}
-          titles={data}
+          titles={searchData}
           nominations={nominations}
           setNominations={setNomination}
         ></ResultList>

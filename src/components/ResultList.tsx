@@ -31,7 +31,7 @@ const ResultList = ({
   setNominations,
 }: IResultList) => {
   const searchData = titles?.titles.Search;
-  console.log(titles);
+
   return !searchData?.length ? (
     <></>
   ) : (

@@ -5,11 +5,12 @@ import { SearchMajorMonotone } from "@shopify/polaris-icons";
 interface ISearchBox {
   title: string;
   setTitle: Function;
+  refetch: Function;
 }
 /**
  * Search box representation
  */
-const SearchBox = ({ title, setTitle }: ISearchBox) => {
+const SearchBox = ({ title, setTitle, refetch }: ISearchBox) => {
   return (
     <Card sectioned>
       <TextField
@@ -18,8 +19,9 @@ const SearchBox = ({ title, setTitle }: ISearchBox) => {
         type="search"
         placeholder="Search Title..."
         value={title}
-        onChange={(e) => {
-          setTitle(e);
+        onChange={(newTitle) => {
+          setTitle(newTitle);
+          refetch({ variables: { title: newTitle } });
         }}
       />
     </Card>
