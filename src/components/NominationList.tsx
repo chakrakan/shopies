@@ -1,48 +1,86 @@
 import React from "react";
 import {
   Card,
-  Stack,
-  DisplayText,
-  TextContainer,
-  Icon,
   Button,
-  Layout,
+  ResourceItem,
+  Thumbnail,
+  TextStyle,
+  Badge,
+  Link,
 } from "@shopify/polaris";
-import Title from "./Title";
 import { ITitleData } from "../types/Title";
-import { PlayCircleMajorMonotone } from "@shopify/polaris-icons";
+import NoImg from "../assets/no-img.png";
 
 interface INominations {
   nominations: Array<ITitleData>;
+  setNominations: Function;
 }
 
-const NominationList = ({ nominations }: INominations) => {
+const NominationList = ({ nominations, setNominations }: INominations) => {
+  const removeNomination = (id: string) => {
+    const updatedList = nominations.filter(
+      (title: ITitleData) => title.imdbID !== id
+    );
+    setNominations(updatedList);
+  };
+
   return !nominations?.length ? (
     <></>
   ) : (
-    <Card sectioned>
-      <TextContainer>
-        <DisplayText>
-          <Icon source={PlayCircleMajorMonotone} />
-          Your Nominations
-        </DisplayText>
-        <Stack vertical={true}>
-          {nominations.map((title: ITitleData) => (
-            <Layout sectioned={true}>
-              <Layout.Section>
-                <Title
-                  Title={title.Title}
-                  Year={title.Year}
-                  Poster={title.Poster}
-                  Type={title.Type}
-                  imdbID={title.imdbID}
-                ></Title>
-                <Button size="slim">Remove</Button>
-              </Layout.Section>
-            </Layout>
-          ))}
-        </Stack>
-      </TextContainer>
+    <Card title="Nominations" sectioned>
+      <Card.Section title="Info">
+        <TextStyle variation="subdued">
+          <span role="img" aria-label="clapper-board">
+            🎬
+          </span>{" "}
+          You can remove your nominations
+        </TextStyle>
+      </Card.Section>
+      <Card.Section title="Titles">
+        {nominations.map((title: ITitleData) => (
+          <ResourceItem
+            key={title.imdbID}
+            id={title.imdbID}
+            name={title.Title}
+            verticalAlignment="center"
+            onClick={() => {}}
+            accessibilityLabel={`Details for ${title.Title}`}
+            media={
+              <Thumbnail
+                source={title.Poster !== "N/A" ? title.Poster : NoImg}
+                alt={title.Title}
+                size="large"
+              ></Thumbnail>
+            }
+          >
+            <h3>
+              <Link
+                external
+                url={`https://www.imdb.com/title/${title.imdbID}/`}
+              >
+                <TextStyle variation="strong">{title.Title}</TextStyle>
+              </Link>
+              &nbsp;
+              <TextStyle variation="subdued">({title.Year})</TextStyle>
+            </h3>
+            <div>
+              <Badge size="small" status="info">
+                {title.Type}
+              </Badge>
+            </div>
+            <br></br>
+            <div>
+              <Button
+                outline
+                onClick={() => removeNomination(title.imdbID)}
+                size="slim"
+              >
+                Remove
+              </Button>
+            </div>
+          </ResourceItem>
+        ))}
+      </Card.Section>
     </Card>
   );
 };
