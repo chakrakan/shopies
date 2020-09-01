@@ -2,21 +2,19 @@ import React from "react";
 import {
   Card,
   Stack,
-  DisplayText,
   TextContainer,
-  Icon,
   Layout,
   Button,
   Banner,
 } from "@shopify/polaris";
 import Title from "./Title";
 import { ITitleData, ITitleSearchData } from "../types/Title";
-import { RecentSearchesMajorMonotone } from "@shopify/polaris-icons";
 
 // Result list should take arrays for the titles from response and current nomination
 // state so it can display results accordingly
 interface IResultList {
   currentTitle: string;
+  isCalled: boolean;
   isLoading: boolean;
   titles?: ITitleSearchData;
   nominations: Array<ITitleData>;
@@ -25,32 +23,35 @@ interface IResultList {
 
 const ResultList = ({
   currentTitle,
+  isCalled,
   isLoading,
   titles,
   nominations,
   setNominations,
 }: IResultList) => {
   const searchData = titles?.titles.Search;
+  const nominate = (id: string) => {
+    const nominatedTitle = searchData?.find((title) => title.imdbID === id);
+    setNominations([...nominations, nominatedTitle]);
+  };
 
   return !searchData?.length ? (
     <></>
   ) : (
-    <Card sectioned>
+    <Card title="Search Results" sectioned>
       <TextContainer>
         {nominations.length === 5 ? (
           <Banner status="success">
             <p>You have nominated 5 movies!</p>
           </Banner>
-        ) : undefined}
+        ) : (
+          <></>
+        )}
       </TextContainer>
       <TextContainer>
-        <DisplayText>
-          <Icon source={RecentSearchesMajorMonotone} />
-          Results for...
-        </DisplayText>
-        <Stack vertical={true}>
-          <Layout sectioned={true}>
-            {searchData.map((title: ITitleData) => (
+        <Stack vertical={false} spacing="tight">
+          {searchData.map((title: ITitleData) => (
+            <Layout sectioned={true}>
               <Layout.Section key={title.imdbID}>
                 <Title
                   Title={title.Title}
@@ -61,6 +62,7 @@ const ResultList = ({
                 ></Title>
                 <Button
                   size="slim"
+                  onClick={() => nominate(title.imdbID)}
                   disabled={
                     nominations.find(
                       (nominated) => nominated.imdbID === title.imdbID
@@ -70,8 +72,8 @@ const ResultList = ({
                   Nominate
                 </Button>
               </Layout.Section>
-            ))}
-          </Layout>
+            </Layout>
+          ))}
         </Stack>
       </TextContainer>
     </Card>

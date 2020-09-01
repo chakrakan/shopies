@@ -1,35 +1,29 @@
 import React from "react";
-import {
-  Card,
-  Stack,
-  DisplayText,
-  TextContainer,
-  Icon,
-  Button,
-  Layout,
-} from "@shopify/polaris";
+import { Card, Stack, TextContainer, Button, Layout } from "@shopify/polaris";
 import Title from "./Title";
 import { ITitleData } from "../types/Title";
-import { PlayCircleMajorMonotone } from "@shopify/polaris-icons";
 
 interface INominations {
   nominations: Array<ITitleData>;
+  setNominations: Function;
 }
 
-const NominationList = ({ nominations }: INominations) => {
+const NominationList = ({ nominations, setNominations }: INominations) => {
+  const removeNomination = (id: string) => {
+    const updatedList = nominations.filter(
+      (title: ITitleData) => title.imdbID !== id
+    );
+    setNominations(updatedList);
+  };
   return !nominations?.length ? (
     <></>
   ) : (
-    <Card sectioned>
+    <Card title="Nominations" sectioned>
       <TextContainer>
-        <DisplayText>
-          <Icon source={PlayCircleMajorMonotone} />
-          Your Nominations
-        </DisplayText>
-        <Stack vertical={true}>
+        <Stack vertical={false}>
           {nominations.map((title: ITitleData) => (
             <Layout sectioned={true}>
-              <Layout.Section>
+              <Layout.Section key={title.imdbID}>
                 <Title
                   Title={title.Title}
                   Year={title.Year}
@@ -37,7 +31,12 @@ const NominationList = ({ nominations }: INominations) => {
                   Type={title.Type}
                   imdbID={title.imdbID}
                 ></Title>
-                <Button size="slim">Remove</Button>
+                <Button
+                  onClick={() => removeNomination(title.imdbID)}
+                  size="slim"
+                >
+                  Remove
+                </Button>
               </Layout.Section>
             </Layout>
           ))}

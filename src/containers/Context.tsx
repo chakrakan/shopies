@@ -12,7 +12,7 @@ import { ITitleData } from "../types/Title";
  */
 const Context = () => {
   const [title, setTitle] = useState("");
-  const [nominations, setNomination] = useState<Array<ITitleData>>([]);
+  const [nominations, setNominations] = useState<Array<ITitleData>>([]);
   const [refetch, { called, loading, data: searchData }] = useLazyQuery(
     SEARCH_TITLE
   );
@@ -20,7 +20,7 @@ const Context = () => {
   console.log(title, called, loading, searchData?.titles.Search);
 
   return (
-    <Layout sectioned={true}>
+    <Layout>
       <Layout.Section>
         <SearchBox
           title={title}
@@ -31,12 +31,18 @@ const Context = () => {
       <Layout.Section oneHalf>
         <ResultList
           currentTitle={title}
+          isCalled={called}
           isLoading={loading}
           titles={searchData}
           nominations={nominations}
-          setNominations={setNomination}
+          setNominations={setNominations}
         ></ResultList>
-        <NominationList nominations={nominations}></NominationList>
+      </Layout.Section>
+      <Layout.Section oneHalf>
+        <NominationList
+          nominations={nominations}
+          setNominations={setNominations}
+        ></NominationList>
       </Layout.Section>
     </Layout>
   );
