@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Layout } from "@shopify/polaris";
 import ResultList from "../components/ResultList";
 import SearchBox from "../components/SearchBox";
@@ -19,13 +19,17 @@ const Context = () => {
 
   console.log(title, called, loading, searchData?.titles.Search);
 
+  const onSearchChange = useCallback((newTitle: string) => {
+    setTitle(newTitle);
+    refetch({ variables: { title: newTitle } });
+  }, [setTitle, refetch]);
+
   return (
     <Layout sectioned={true}>
       <Layout.Section>
         <SearchBox
           title={title}
-          setTitle={setTitle}
-          refetch={refetch}
+          onChange={onSearchChange}
         ></SearchBox>
       </Layout.Section>
       <Layout.Section oneHalf>

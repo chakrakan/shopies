@@ -1,16 +1,15 @@
 import React from "react";
-import { Card, TextField, Icon } from "@shopify/polaris";
+import { Card, TextField, Icon, TextFieldProps } from "@shopify/polaris";
 import { SearchMajorMonotone } from "@shopify/polaris-icons";
 
 interface ISearchBox {
   title: string;
-  setTitle: Function;
-  refetch: Function;
+  onChange: TextFieldProps['onChange'];
 }
 /**
  * Search box representation
  */
-const SearchBox = ({ title, setTitle, refetch }: ISearchBox) => {
+const SearchBox = ({ title, onChange = () => { } }: ISearchBox) => {
   return (
     <Card sectioned>
       <TextField
@@ -19,10 +18,7 @@ const SearchBox = ({ title, setTitle, refetch }: ISearchBox) => {
         type="search"
         placeholder="Search Title..."
         value={title}
-        onChange={(newTitle) => {
-          setTitle(newTitle);
-          refetch({ variables: { title: newTitle } });
-        }}
+        onChange={onChange}
       />
     </Card>
   );
