@@ -12,35 +12,39 @@ import { ITitleData } from "../types/Title";
  */
 const Context = () => {
   const [title, setTitle] = useState("");
-  const [nominations, setNomination] = useState<Array<ITitleData>>([]);
+  const [nominations, setNominations] = useState<Array<ITitleData>>([]);
   const [refetch, { called, loading, data: searchData }] = useLazyQuery(
     SEARCH_TITLE
   );
 
-  console.log(title, called, loading, searchData?.titles.Search);
-
-  const onSearchChange = useCallback((newTitle: string) => {
-    setTitle(newTitle);
-    refetch({ variables: { title: newTitle } });
-  }, [setTitle, refetch]);
+  const onSearchChange = useCallback(
+    (newTitle: string) => {
+      setTitle(newTitle);
+      refetch({ variables: { title: newTitle } });
+    },
+    [setTitle, refetch]
+  );
 
   return (
-    <Layout sectioned={true}>
+    <Layout>
       <Layout.Section>
-        <SearchBox
-          title={title}
-          onChange={onSearchChange}
-        ></SearchBox>
+        <SearchBox title={title} onChange={onSearchChange}></SearchBox>
       </Layout.Section>
       <Layout.Section oneHalf>
         <ResultList
           currentTitle={title}
+          isCalled={called}
           isLoading={loading}
           titles={searchData}
           nominations={nominations}
-          setNominations={setNomination}
+          setNominations={setNominations}
         ></ResultList>
-        <NominationList nominations={nominations}></NominationList>
+      </Layout.Section>
+      <Layout.Section oneHalf>
+        <NominationList
+          nominations={nominations}
+          setNominations={setNominations}
+        ></NominationList>
       </Layout.Section>
     </Layout>
   );
