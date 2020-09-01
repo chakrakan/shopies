@@ -10,18 +10,29 @@ import {
   Banner,
 } from "@shopify/polaris";
 import Title from "./Title";
-import { ITitleData } from "../types/Title";
+import { ITitleData, ITitleSearchData } from "../types/Title";
 import { RecentSearchesMajorMonotone } from "@shopify/polaris-icons";
 
 // Result list should take arrays for the titles from response and current nomination
 // state so it can display results accordingly
 interface IResultList {
-  titles: Array<ITitleData>;
+  currentTitle: string;
+  isLoading: boolean;
+  titles?: ITitleSearchData;
   nominations: Array<ITitleData>;
+  setNominations: Function;
 }
 
-const ResultList = ({ titles, nominations }: IResultList) => {
-  return !titles?.length ? (
+const ResultList = ({
+  currentTitle,
+  isLoading,
+  titles,
+  nominations,
+  setNominations,
+}: IResultList) => {
+  const searchData = titles?.titles.Search;
+  console.log(titles);
+  return !searchData?.length ? (
     <></>
   ) : (
     <Card sectioned>
@@ -38,9 +49,9 @@ const ResultList = ({ titles, nominations }: IResultList) => {
           Results for...
         </DisplayText>
         <Stack vertical={true}>
-          {titles.map((title: ITitleData) => (
-            <Layout sectioned={true}>
-              <Layout.Section>
+          <Layout sectioned={true}>
+            {searchData.map((title: ITitleData) => (
+              <Layout.Section key={title.imdbID}>
                 <Title
                   Title={title.Title}
                   Year={title.Year}
@@ -59,8 +70,8 @@ const ResultList = ({ titles, nominations }: IResultList) => {
                   Nominate
                 </Button>
               </Layout.Section>
-            </Layout>
-          ))}
+            ))}
+          </Layout>
         </Stack>
       </TextContainer>
     </Card>
