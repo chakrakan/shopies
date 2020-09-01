@@ -17,20 +17,18 @@ const Context = () => {
     SEARCH_TITLE
   );
 
-  console.log(title, called, loading, searchData?.titles.Search);
-
-  const onSearchChange = useCallback((newTitle: string) => {
-    setTitle(newTitle);
-    refetch({ variables: { title: newTitle } });
-  }, [setTitle, refetch]);
+  const onSearchChange = useCallback(
+    (newTitle: string) => {
+      setTitle(newTitle);
+      refetch({ variables: { title: newTitle } });
+    },
+    [setTitle, refetch]
+  );
 
   return (
     <Layout>
       <Layout.Section>
-        <SearchBox
-          title={title}
-          onChange={onSearchChange}
-        ></SearchBox>
+        <SearchBox title={title} onChange={onSearchChange}></SearchBox>
       </Layout.Section>
       <Layout.Section oneHalf>
         <ResultList

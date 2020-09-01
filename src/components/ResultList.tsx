@@ -1,14 +1,17 @@
 import React from "react";
 import {
   Card,
-  Layout,
   Button,
   Banner,
   TextStyle,
   Spinner,
+  ResourceItem,
+  Thumbnail,
+  Badge,
+  Link,
 } from "@shopify/polaris";
-import Title from "./Title";
 import { ITitleData, ITitleSearchData } from "../types/Title";
+import NoImg from "../assets/no-img.png";
 
 // Result list should take arrays for the titles from response and current nomination
 // state so it can display results accordingly
@@ -38,7 +41,20 @@ const ResultList = ({
   return !searchData?.length ? (
     <></>
   ) : (
-    <Card title="Search Results" sectioned>
+    <Card
+      title={
+        isLoading && isCalled ? (
+          <Spinner
+            accessibilityLabel="Loading search results"
+            size="large"
+            color="teal"
+          ></Spinner>
+        ) : (
+          `Search Results for ${currentTitle}`
+        )
+      }
+      sectioned
+    >
       {nominations.length === 5 ? (
         <Banner status="success">
           <p>You have nominated 5 movies!</p>
@@ -47,29 +63,64 @@ const ResultList = ({
         <></>
       )}
 
-      <Card.Section>
-        {isLoading && isCalled ? (
-          <Spinner
-            accessibilityLabel="Loading search results"
-            size="large"
-            color="teal"
-          ></Spinner>
-        ) : (
-          <TextStyle variation="subdued">{currentTitle}</TextStyle>
-        )}
+      <Card.Section title="Info">
+        <TextStyle variation="subdued">
+          <span role="img" aria-label="clapper-board">
+            🎬
+          </span>{" "}
+          Click on a movie title to find out more about it on IMDB<br></br>
+          <span role="img" aria-label="clapper-board">
+            🏆
+          </span>{" "}
+          Pick upto 5 nominations
+        </TextStyle>
       </Card.Section>
+
       <Card.Section title="Titles">
         {searchData.map((title: ITitleData) => (
-          <Layout sectioned={true}>
-            <Layout.Section key={title.imdbID}>
-              <Title
-                Title={title.Title}
-                Year={title.Year}
-                Poster={title.Poster}
-                Type={title.Type}
-                imdbID={title.imdbID}
-              ></Title>
+          <ResourceItem
+            key={title.imdbID}
+            id={title.imdbID}
+            name={title.Title}
+            verticalAlignment="center"
+            onClick={() => {}}
+            accessibilityLabel={`Details for ${title.Title}`}
+            media={
+              <Thumbnail
+                source={title.Poster !== "N/A" ? title.Poster : NoImg}
+                alt={title.Title}
+                size="large"
+              ></Thumbnail>
+            }
+          >
+            <h3>
+              <Link
+                external
+                url={`https://www.imdb.com/title/${title.imdbID}/`}
+              >
+                <TextStyle variation="strong">{title.Title}</TextStyle>
+              </Link>
+              &nbsp;
+              <TextStyle variation="subdued">({title.Year})</TextStyle>
+            </h3>
+            <div>
+              <Badge
+                size="small"
+                status={
+                  title.Type === "series"
+                    ? "info"
+                    : title.Type === "movie"
+                    ? "success"
+                    : "warning"
+                }
+              >
+                {title.Type}
+              </Badge>
+            </div>
+            <br></br>
+            <div>
               <Button
+                outline
                 size="slim"
                 onClick={() => nominate(title.imdbID)}
                 disabled={
@@ -80,8 +131,8 @@ const ResultList = ({
               >
                 Nominate
               </Button>
-            </Layout.Section>
-          </Layout>
+            </div>
+          </ResourceItem>
         ))}
       </Card.Section>
     </Card>
