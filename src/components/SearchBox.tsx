@@ -4,12 +4,13 @@ import { SearchMajorMonotone } from "@shopify/polaris-icons";
 
 interface ISearchBox {
   title: string;
-  onChange: TextFieldProps['onChange'];
+  onChange: TextFieldProps["onChange"];
 }
+
 /**
  * Search box representation
  */
-const SearchBox = ({ title, onChange = () => { } }: ISearchBox) => {
+const SearchBox = ({ title, onChange = () => {} }: ISearchBox) => {
   return (
     <Card sectioned>
       <TextField

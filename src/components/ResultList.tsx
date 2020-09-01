@@ -1,11 +1,11 @@
 import React from "react";
 import {
   Card,
-  Stack,
-  TextContainer,
   Layout,
   Button,
   Banner,
+  TextStyle,
+  Spinner,
 } from "@shopify/polaris";
 import Title from "./Title";
 import { ITitleData, ITitleSearchData } from "../types/Title";
@@ -39,43 +39,51 @@ const ResultList = ({
     <></>
   ) : (
     <Card title="Search Results" sectioned>
-      <TextContainer>
-        {nominations.length === 5 ? (
-          <Banner status="success">
-            <p>You have nominated 5 movies!</p>
-          </Banner>
+      {nominations.length === 5 ? (
+        <Banner status="success">
+          <p>You have nominated 5 movies!</p>
+        </Banner>
+      ) : (
+        <></>
+      )}
+
+      <Card.Section>
+        {isLoading && isCalled ? (
+          <Spinner
+            accessibilityLabel="Loading search results"
+            size="large"
+            color="teal"
+          ></Spinner>
         ) : (
-          <></>
+          <TextStyle variation="subdued">{currentTitle}</TextStyle>
         )}
-      </TextContainer>
-      <TextContainer>
-        <Stack vertical={false} spacing="tight">
-          {searchData.map((title: ITitleData) => (
-            <Layout sectioned={true}>
-              <Layout.Section key={title.imdbID}>
-                <Title
-                  Title={title.Title}
-                  Year={title.Year}
-                  Poster={title.Poster}
-                  Type={title.Type}
-                  imdbID={title.imdbID}
-                ></Title>
-                <Button
-                  size="slim"
-                  onClick={() => nominate(title.imdbID)}
-                  disabled={
-                    nominations.find(
-                      (nominated) => nominated.imdbID === title.imdbID
-                    ) !== undefined
-                  }
-                >
-                  Nominate
-                </Button>
-              </Layout.Section>
-            </Layout>
-          ))}
-        </Stack>
-      </TextContainer>
+      </Card.Section>
+      <Card.Section title="Titles">
+        {searchData.map((title: ITitleData) => (
+          <Layout sectioned={true}>
+            <Layout.Section key={title.imdbID}>
+              <Title
+                Title={title.Title}
+                Year={title.Year}
+                Poster={title.Poster}
+                Type={title.Type}
+                imdbID={title.imdbID}
+              ></Title>
+              <Button
+                size="slim"
+                onClick={() => nominate(title.imdbID)}
+                disabled={
+                  nominations.find(
+                    (nominated) => nominated.imdbID === title.imdbID
+                  ) !== undefined
+                }
+              >
+                Nominate
+              </Button>
+            </Layout.Section>
+          </Layout>
+        ))}
+      </Card.Section>
     </Card>
   );
 };
