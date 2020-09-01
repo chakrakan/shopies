@@ -64,16 +64,7 @@ const NominationList = ({ nominations, setNominations }: INominations) => {
               <TextStyle variation="subdued">({title.Year})</TextStyle>
             </h3>
             <div>
-              <Badge
-                size="small"
-                status={
-                  title.Type === "series"
-                    ? "info"
-                    : title.Type === "movie"
-                    ? "success"
-                    : "warning"
-                }
-              >
+              <Badge size="small" status="info">
                 {title.Type}
               </Badge>
             </div>
