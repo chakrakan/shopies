@@ -64,6 +64,35 @@ const ResultList = ({
         </TextStyle>
       </Card.Section>
     </Card>
+  ) : nominations.length === 5 ? (
+    <Card
+      title={
+        isLoading && isCalled ? (
+          <Spinner
+            accessibilityLabel="Loading search results"
+            size="large"
+            color="teal"
+          ></Spinner>
+        ) : (
+          `Check Nominations`
+        )
+      }
+      sectioned
+    >
+      <Card.Section title="Info">
+        <TextStyle variation="subdued">
+          <span role="img" aria-label="trophy">
+            🏆
+          </span>{" "}
+          The nominations are in...
+        </TextStyle>
+      </Card.Section>
+      <Card.Section>
+        <Banner status="success">
+          <p>You have nominated 5 movies!</p>
+        </Banner>
+      </Card.Section>
+    </Card>
   ) : (
     <Card
       title={
@@ -79,14 +108,6 @@ const ResultList = ({
       }
       sectioned
     >
-      {nominations.length === 5 ? (
-        <Banner status="success">
-          <p>You have nominated 5 movies!</p>
-        </Banner>
-      ) : (
-        <></>
-      )}
-
       <Card.Section title="Info">
         <TextStyle variation="subdued">
           <span role="img" aria-label="clapper-board">
