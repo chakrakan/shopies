@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { Layout } from "@shopify/polaris";
 import ResultList from "../components/ResultList";
 import SearchBox from "../components/SearchBox";
@@ -6,7 +6,7 @@ import NominationList from "../components/NominationList";
 import { SEARCH_TITLE } from "../gql/Queries";
 import { useLazyQuery } from "@apollo/client";
 import { ITitleData } from "../types/Title";
-
+import { debounce } from 'lodash';
 /**
  * This will hold the context for the child Componenets
  */
@@ -18,17 +18,20 @@ const Context = () => {
   );
 
   const onSearchChange = useCallback(
-    (newTitle: string) => {
+    debounce((newTitle: string) => {
       setTitle(newTitle);
       refetch({ variables: { title: newTitle } });
-    },
+    }, 1500),
     [setTitle, refetch]
   );
 
   return (
     <Layout>
       <Layout.Section>
-        <SearchBox title={title} onChange={onSearchChange}></SearchBox>
+        <SearchBox
+          title={title}
+          onChange={onSearchChange}
+        />
       </Layout.Section>
       <Layout.Section oneHalf>
         <ResultList
