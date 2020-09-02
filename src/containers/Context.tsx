@@ -6,7 +6,7 @@ import NominationList from "../components/NominationList";
 import { SEARCH_TITLE } from "../gql/Queries";
 import { useLazyQuery } from "@apollo/client";
 import { ITitleData } from "../types/Title";
-import { debounce } from 'lodash';
+
 /**
  * This will hold the context for the child Componenets
  */
@@ -19,11 +19,11 @@ const Context = () => {
   const searchTimeout = useRef<number | null>(null);
 
   const onSearchChange = useCallback((newTitle: string) => {
-    if (searchTimeout !== null)
-      clearTimeout(searchTimeout);
+    if (searchTimeout.current !== null)
+      clearTimeout(searchTimeout.current);
     setTitle(newTitle);
 
-    searchTimeout.current = setTimeout(() => {
+    searchTimeout.current = window.setTimeout(() => {
       refetch({ variables: { title: newTitle } });
     }, 1500);
     
