@@ -33,8 +33,8 @@ const NominationList: React.FC<INominations> = ({
     <Card title="Your Nominations" sectioned>
       <Card.Section title="Info">
         <TextStyle variation="subdued">
-          <span role="img" aria-label="red-cross">
-            ❌
+          <span role="img" aria-label="cross">
+            ❎
           </span>{" "}
           Remove nominations if you change your mind about a choice.
         </TextStyle>

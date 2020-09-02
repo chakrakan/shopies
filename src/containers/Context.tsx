@@ -28,7 +28,7 @@ const Context: React.FC = () => {
       if (searchTimeout.current !== null) clearTimeout(searchTimeout.current);
       setTitle(newTitle);
       searchTimeout.current = window.setTimeout(() => {
-        refetch({ variables: { title: newTitle } });
+        refetch({ variables: { title: newTitle.trim() } });
       }, 800);
     },
     [setTitle, refetch]

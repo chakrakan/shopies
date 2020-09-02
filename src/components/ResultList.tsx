@@ -9,6 +9,8 @@ import {
   Thumbnail,
   Badge,
   Link,
+  TextContainer,
+  ButtonGroup,
 } from "@shopify/polaris";
 import { ITitleData, ITitleSearchData } from "../types/Title";
 import NoImg from "../assets/no-img.png";
@@ -57,10 +59,13 @@ const ResultList: React.FC<IResultList> = ({
     >
       <Card.Section title="Info">
         <TextStyle variation="subdued">
-          <span role="img" aria-label="clapper-board">
-            🎬
+          <span role="img" aria-label="pensive">
+            😔
           </span>{" "}
-          Sorry, no movies with that title found :(<br></br>
+          Sorry, no movies with that title found.<br></br>
+          <span role="img" aria-label="memo">
+            📝
+          </span>{" "}
           Try refining your search query!
         </TextStyle>
       </Card.Section>
@@ -75,23 +80,31 @@ const ResultList: React.FC<IResultList> = ({
             color="teal"
           ></Spinner>
         ) : (
-          `Check Nominations`
+          `Share Nominations`
         )
       }
       sectioned
     >
-      <Card.Section title="Info">
-        <TextStyle variation="subdued">
-          <span role="img" aria-label="trophy">
-            🏆
-          </span>{" "}
-          The nominations are in...
-        </TextStyle>
-      </Card.Section>
+      <Banner status="success">
+        <p>You have nominated 5 movies!</p>
+      </Banner>
       <Card.Section>
-        <Banner status="success">
-          <p>You have nominated 5 movies!</p>
-        </Banner>
+        <TextContainer spacing="loose">
+          <p>
+            Click <strong>Share</strong> to receive a link that provides a quick
+            overview of your nominations to someone on the browser.<br></br>
+            <br></br>
+            Alternatively, you can choose to <strong>Download</strong> your
+            nominations data in JSON format.
+          </p>
+          <hr></hr>
+          <ButtonGroup fullWidth>
+            <Button size="medium">Share</Button>
+            <Button size="medium" primary>
+              Download
+            </Button>
+          </ButtonGroup>
+        </TextContainer>
       </Card.Section>
     </Card>
   ) : (
@@ -114,7 +127,8 @@ const ResultList: React.FC<IResultList> = ({
           <span role="img" aria-label="clapper-board">
             ℹ️
           </span>{" "}
-          Click on a movie title to find out more about it on IMDB<br></br>
+          Click on a movie <strong>title</strong> to find out more about it on
+          IMDB<br></br>
           <span role="img" aria-label="trophy">
             🏆
           </span>{" "}
@@ -157,7 +171,7 @@ const ResultList: React.FC<IResultList> = ({
             <br></br>
             <div>
               <Button
-                outline
+                primary
                 size="slim"
                 onClick={() => nominate(title.imdbID)}
                 disabled={
