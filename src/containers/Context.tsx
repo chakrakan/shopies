@@ -16,15 +16,17 @@ const Context = () => {
   const [refetch, { called, loading, data: searchData }] = useLazyQuery(
     SEARCH_TITLE
   );
+  const searchTimeout = useRef<number | null>(null);
 
-  const debouncedSearch = useRef<Function | null>(null);
   const onSearchChange = useCallback((newTitle: string) => {
+    if (searchTimeout !== null)
+      clearTimeout(searchTimeout);
     setTitle(newTitle);
-    debouncedSearch.current?.cancel?.();
-    debouncedSearch.current = debounce(() => {
+
+    searchTimeout.current = setTimeout(() => {
       refetch({ variables: { title: newTitle } });
     }, 1500);
-    debouncedSearch.current();
+    
   }, [setTitle, refetch]);
 
   return (
