@@ -17,13 +17,15 @@ const Context = () => {
     SEARCH_TITLE
   );
 
-  const onSearchChange = useCallback(
-    debounce((newTitle: string) => {
-      setTitle(newTitle);
+  const debouncedSearch = useRef<Function | null>(null);
+  const onSearchChange = useCallback((newTitle: string) => {
+    setTitle(newTitle);
+    debouncedSearch.current?.cancel?.();
+    debouncedSearch.current = debounce(() => {
       refetch({ variables: { title: newTitle } });
-    }, 1500),
-    [setTitle, refetch]
-  );
+    }, 1500);
+    debouncedSearch.current();
+  }, [setTitle, refetch]);
 
   return (
     <Layout>
