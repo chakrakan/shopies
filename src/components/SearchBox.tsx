@@ -10,7 +10,7 @@ interface ISearchBox {
 /**
  * Search box representation
  */
-const SearchBox = ({ title, onChange = () => {} }: ISearchBox) => {
+const SearchBox: React.FC<ISearchBox> = ({ title, onChange = () => {} }) => {
   return (
     <Card sectioned>
       <TextField

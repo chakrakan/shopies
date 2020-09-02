@@ -24,14 +24,14 @@ interface IResultList {
   setNominations: Function;
 }
 
-const ResultList = ({
+const ResultList: React.FC<IResultList> = ({
   currentTitle,
   isCalled,
   isLoading,
   titles,
   nominations,
   setNominations,
-}: IResultList) => {
+}) => {
   const searchData = titles?.titles.Search;
   const nominate = (id: string) => {
     const nominatedTitle = searchData?.find((title) => title.imdbID === id);
@@ -61,6 +61,7 @@ const ResultList = ({
             🎬
           </span>{" "}
           Sorry, no movies with that title found :(<br></br>
+          Try refining your search query!
         </TextStyle>
       </Card.Section>
     </Card>
@@ -111,13 +112,13 @@ const ResultList = ({
       <Card.Section title="Info">
         <TextStyle variation="subdued">
           <span role="img" aria-label="clapper-board">
-            🎬
+            ℹ️
           </span>{" "}
           Click on a movie title to find out more about it on IMDB<br></br>
           <span role="img" aria-label="trophy">
             🏆
           </span>{" "}
-          You can nominate 5 movies!
+          You can nominate <strong>{5 - nominations?.length}</strong> movies!
         </TextStyle>
       </Card.Section>
 

@@ -10,7 +10,7 @@ import { ITitleData } from "../types/Title";
 /**
  * This will hold the context for the child Componenets
  */
-const Context = () => {
+const Context: React.FC = () => {
   const [title, setTitle] = useState("");
   const [nominations, setNominations] = useState<Array<ITitleData>>([]);
   const [refetch, { called, loading, data: searchData }] = useLazyQuery(
