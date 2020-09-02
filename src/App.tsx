@@ -7,27 +7,25 @@ import Context from "./containers/Context";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import { RestLink } from "apollo-link-rest";
 
-class App extends React.Component {
+const App = () => {
   // https://www.apollographql.com/docs/react/api/link/apollo-link-rest/#gatsby-focus-wrapper
-  restLink = new RestLink({
+  const restLink = new RestLink({
     uri: process.env.REACT_APP_BASE_API,
     responseTransformer: async (response) =>
       response.json().then((data: JSON) => data),
   });
-  client = new ApolloClient({
-    link: this.restLink,
+  const client = new ApolloClient({
+    link: restLink,
     cache: new InMemoryCache(),
   });
-  render() {
-    return (
-      <ApolloProvider client={this.client}>
-        <Page title="The Shopies">
-          <Context></Context>
-          <Footer></Footer>
-        </Page>
-      </ApolloProvider>
-    );
-  }
-}
+  return (
+    <ApolloProvider client={client}>
+      <Page title="The Shopies" separator>
+        <Context></Context>
+        <Footer></Footer>
+      </Page>
+    </ApolloProvider>
+  );
+};
 
 export default App;

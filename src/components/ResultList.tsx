@@ -24,14 +24,14 @@ interface IResultList {
   setNominations: Function;
 }
 
-const ResultList = ({
+const ResultList: React.FC<IResultList> = ({
   currentTitle,
   isCalled,
   isLoading,
   titles,
   nominations,
   setNominations,
-}: IResultList) => {
+}) => {
   const searchData = titles?.titles.Search;
   const nominate = (id: string) => {
     const nominatedTitle = searchData?.find((title) => title.imdbID === id);
@@ -61,7 +61,37 @@ const ResultList = ({
             🎬
           </span>{" "}
           Sorry, no movies with that title found :(<br></br>
+          Try refining your search query!
         </TextStyle>
+      </Card.Section>
+    </Card>
+  ) : nominations.length === 5 ? (
+    <Card
+      title={
+        isLoading && isCalled ? (
+          <Spinner
+            accessibilityLabel="Loading search results"
+            size="large"
+            color="teal"
+          ></Spinner>
+        ) : (
+          `Check Nominations`
+        )
+      }
+      sectioned
+    >
+      <Card.Section title="Info">
+        <TextStyle variation="subdued">
+          <span role="img" aria-label="trophy">
+            🏆
+          </span>{" "}
+          The nominations are in...
+        </TextStyle>
+      </Card.Section>
+      <Card.Section>
+        <Banner status="success">
+          <p>You have nominated 5 movies!</p>
+        </Banner>
       </Card.Section>
     </Card>
   ) : (
@@ -79,24 +109,16 @@ const ResultList = ({
       }
       sectioned
     >
-      {nominations.length === 5 ? (
-        <Banner status="success">
-          <p>You have nominated 5 movies!</p>
-        </Banner>
-      ) : (
-        <></>
-      )}
-
       <Card.Section title="Info">
         <TextStyle variation="subdued">
           <span role="img" aria-label="clapper-board">
-            🎬
+            ℹ️
           </span>{" "}
           Click on a movie title to find out more about it on IMDB<br></br>
           <span role="img" aria-label="trophy">
             🏆
           </span>{" "}
-          You can nominate 5 movies!
+          You can nominate <strong>{5 - nominations?.length}</strong> movies!
         </TextStyle>
       </Card.Section>
 

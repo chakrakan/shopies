@@ -16,7 +16,10 @@ interface INominations {
   setNominations: Function;
 }
 
-const NominationList = ({ nominations, setNominations }: INominations) => {
+const NominationList: React.FC<INominations> = ({
+  nominations,
+  setNominations,
+}) => {
   const removeNomination = (id: string) => {
     const updatedList = nominations.filter(
       (title: ITitleData) => title.imdbID !== id
@@ -27,13 +30,13 @@ const NominationList = ({ nominations, setNominations }: INominations) => {
   return !nominations?.length ? (
     <></>
   ) : (
-    <Card title="Nominations" sectioned>
+    <Card title="Your Nominations" sectioned>
       <Card.Section title="Info">
         <TextStyle variation="subdued">
-          <span role="img" aria-label="clapper-board">
-            🎬
+          <span role="img" aria-label="red-cross">
+            ❌
           </span>{" "}
-          You can remove your nominations
+          Remove nominations if you change your mind about a choice.
         </TextStyle>
       </Card.Section>
       <Card.Section title="Titles">
