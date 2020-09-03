@@ -16,6 +16,7 @@ import {
 } from "@shopify/polaris";
 import { ITitleData, ITitleSearchData } from "../types/Title";
 import NoImg from "../assets/no-img.png";
+import { ShareMinor, PageDownMajorMonotone } from "@shopify/polaris-icons";
 
 // Result list should take arrays for the titles from response and current nomination
 // state so it can display results accordingly
@@ -124,12 +125,13 @@ const ResultList: React.FC<IResultList> = ({
             </p>
             <hr></hr>
             <ButtonGroup fullWidth>
-              <Button size="medium" onClick={toggleActive}>
+              <Button icon={ShareMinor} size="medium" onClick={toggleActive}>
                 Share
               </Button>
               <Button
+                icon={PageDownMajorMonotone}
                 download="nominations.json"
-                url={`data:text/json;charset=utf-8,${encodeURIComponent(
+                url={`data:application/json;charset=utf-8,${encodeURIComponent(
                   JSON.stringify(nominations)
                 )}`}
                 size="medium"
