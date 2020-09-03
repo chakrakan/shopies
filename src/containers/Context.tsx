@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useRef,
-  useLayoutEffect,
-  useEffect,
-} from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { Layout } from "@shopify/polaris";
 import ResultList from "../components/ResultList";
 import SearchBox from "../components/SearchBox";
@@ -47,69 +41,45 @@ const Context: React.FC = () => {
   );
 
   /**
-   * This function updates the URL everytime nominations are added/removed.
-   * @param nominations the nominations array from the Context component state
-   */
-  const updateURL = useCallback((nominations: Array<ITitleData>) => {
-    const basePath =
-      window.location.protocol + "//" + window.location.host + "/";
-
-    if (nominations?.length !== 0) {
-      let queryString = qs.stringify({
-        imdbID: nominations?.map((title) => title.imdbID).join(","),
-      });
-      let updatedURL = basePath + "?" + queryString;
-      window.history.replaceState({ path: updatedURL }, "", updatedURL);
-    } else {
-      window.history.replaceState({ path: basePath }, "", basePath);
-    }
-  }, []);
-
-  /**
    * Get existing IDs from a shared link from a previous instance.
    * Check if querystring (delimited by ? and split by =) has 5 ids.
    * If so, make the GET_TITLE call for each one and populate nominations list
    */
   const getExistingIds = useCallback(
     (idArray: Array<string>) => {
-      let updatedNominations: Array<ITitleData> = [];
-      idArray.forEach(async (idx) => {
-        const titleData: ITitleData = await client
-          .query<ITitleIdData, ITitleGetVar>({
-            query: GET_TITLE,
-            variables: { id: idx },
-          })
-          .then((resp) => {
-            return resp.data?.title;
-          })
-          .catch((err) => err);
+      Promise.all(
+        idArray.map(async (idx) => {
+          const titleData: ITitleData = await client
+            .query<ITitleIdData, ITitleGetVar>({
+              query: GET_TITLE,
+              variables: { id: idx },
+            })
+            .then((resp) => {
+              return resp.data?.title;
+            })
+            .catch((err) => err);
 
-        updatedNominations.push(titleData);
-      });
-      setNominations(updatedNominations);
+          return titleData;
+        })
+      ).then((titleDatas) => setNominations(titleDatas));
     },
     [client]
   );
 
   useEffect(() => {
-    updateURL(nominations);
+    // updateURL(nominations);
     // initialize localstorage with empty nominations field
-    localStorage.setItem("nominations", JSON.stringify(nominations));
-  }, [nominations, updateURL]);
-
-  useLayoutEffect(() => {
     const idsFromUrl = qs
       .parse(window.location.search)
       ["?imdbID"]?.toString()
       .split(",");
     // if a URL with ids is passed and the app wasn't used before (0 prior nominations)
-    if (idsFromUrl?.length > 0 && nominations?.length === 0) {
+    if (idsFromUrl?.length > 0) {
       getExistingIds(idsFromUrl); // make API calls for each id and setNominations to array from the ids
     }
 
-    // TODO: if you provide 5 id's in the URL, it switches back to base URL
-    // TODO: Render the child components based on the state after reading in the 5 IDs
-  }, [getExistingIds, setNominations, nominations]);
+    localStorage.setItem("nominations", JSON.stringify(nominations));
+  }, [nominations, getExistingIds, setNominations]);
 
   return (
     <Layout>

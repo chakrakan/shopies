@@ -16,6 +16,7 @@ import {
 import { ITitleData } from "../types/Title";
 import NoImg from "../assets/no-img.png";
 import { ShareMinor, PageDownMajorMonotone } from "@shopify/polaris-icons";
+import qs from "querystring";
 
 interface INominations {
   nominations: Array<ITitleData>;
@@ -40,9 +41,15 @@ const NominationList: React.FC<INominations> = ({
   /**
    * Copies the created URL from window.location.href to be shared
    */
-  const saveLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-  };
+  const saveLink = useCallback(() => {
+    const basePath =
+      window.location.protocol + "//" + window.location.host + "/";
+    let queryString = qs.stringify({
+      imdbID: nominations?.map((title) => title.imdbID).join(","),
+    });
+    let updatedURL = basePath + "?" + queryString;
+    navigator.clipboard.writeText(updatedURL);
+  }, [nominations]);
 
   /**
    *  Tost from Polaris
@@ -52,7 +59,7 @@ const NominationList: React.FC<INominations> = ({
   const toggleActive = useCallback(() => {
     saveLink();
     setActive((active) => !active);
-  }, []);
+  }, [saveLink]);
 
   const toastMarkup = active ? (
     <Toast content="Link Copied!" onDismiss={toggleActive} />
