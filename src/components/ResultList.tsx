@@ -1,22 +1,16 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import {
   Card,
   Button,
-  Banner,
   TextStyle,
   Spinner,
   ResourceItem,
   Thumbnail,
   Badge,
   Link,
-  TextContainer,
-  ButtonGroup,
-  Toast,
-  Frame,
 } from "@shopify/polaris";
 import { ITitleData, ITitleSearchData } from "../types/Title";
 import NoImg from "../assets/no-img.png";
-import { ShareMinor, PageDownMajorMonotone } from "@shopify/polaris-icons";
 
 // Result list should take arrays for the titles from response and current nomination
 // state so it can display results accordingly
@@ -37,17 +31,6 @@ const ResultList: React.FC<IResultList> = ({
   nominations,
   setNominations,
 }) => {
-  const [active, setActive] = useState(false);
-
-  const toggleActive = useCallback(() => {
-    saveLink();
-    setActive((active) => !active);
-  }, []);
-
-  const toastMarkup = active ? (
-    <Toast content="Link Copied!" onDismiss={toggleActive} />
-  ) : null;
-
   const searchData = titles?.titles.Search;
 
   const nominate = (id: string) => {
@@ -55,13 +38,6 @@ const ResultList: React.FC<IResultList> = ({
       (title) => title.imdbID === id
     );
     setNominations([...nominations, nominatedTitle]);
-  };
-
-  /**
-   * Copies the created URL from window.location.href to be shared
-   */
-  const saveLink = () => {
-    navigator.clipboard.writeText(window.location.href);
   };
 
   return !searchData && currentTitle.length < 1 ? (
@@ -94,57 +70,6 @@ const ResultList: React.FC<IResultList> = ({
         </TextStyle>
       </Card.Section>
     </Card>
-  ) : nominations.length === 5 ? (
-    <Frame>
-      <Card
-        title={
-          isLoading && isCalled ? (
-            <Spinner
-              accessibilityLabel="Loading search results"
-              size="large"
-              color="teal"
-            ></Spinner>
-          ) : (
-            `Share Nominations`
-          )
-        }
-        sectioned
-      >
-        <Banner status="success">
-          <p>You have finalized 5 nominations!</p>
-        </Banner>
-        <Card.Section>
-          <TextContainer spacing="loose">
-            <p>
-              Click <strong>Share</strong> to receive a link that provides a
-              quick overview of your nominations to someone on the browser.
-              <br></br>
-              <br></br>
-              Alternatively, you can choose to <strong>Download</strong> your
-              nominations data in JSON format.
-            </p>
-            <hr></hr>
-            <ButtonGroup fullWidth>
-              <Button icon={ShareMinor} size="medium" onClick={toggleActive}>
-                Share
-              </Button>
-              <Button
-                icon={PageDownMajorMonotone}
-                download="nominations.json"
-                url={`data:application/json;charset=utf-8,${encodeURIComponent(
-                  JSON.stringify(nominations)
-                )}`}
-                size="medium"
-                primary
-              >
-                Download
-              </Button>
-            </ButtonGroup>
-          </TextContainer>
-        </Card.Section>
-        {toastMarkup}
-      </Card>
-    </Frame>
   ) : (
     <Card
       title={
