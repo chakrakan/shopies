@@ -27,7 +27,9 @@ const NominationList: React.FC<INominations> = ({
     setNominations(updatedList);
   };
 
-  return !nominations?.length ? (
+  console.log(nominations);
+
+  return nominations.length === 0 ? (
     <></>
   ) : (
     <Card title="Your Nominations" sectioned>

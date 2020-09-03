@@ -13,6 +13,7 @@ import qs from "querystring";
  */
 const Context: React.FC = () => {
   const [title, setTitle] = useState("");
+  // const [sharedLinkCheck, setSharedLinkCheck] = useState(false);
   const [nominations, setNominations] = useState<Array<ITitleData>>([]);
   const [refetch, { called, loading, data: searchData }] = useLazyQuery(
     SEARCH_TITLE
@@ -21,7 +22,7 @@ const Context: React.FC = () => {
   const idsFromUrl = qs
     .parse(window.location.search)
     ["?imdbID"]?.toString()
-    .split("&");
+    .split(",");
 
   const searchTimeout = useRef<number | null>(null);
 
@@ -41,20 +42,24 @@ const Context: React.FC = () => {
     [setTitle, refetch]
   );
 
-  const updateURL = (nominations: Array<ITitleData>) => {
+  /**
+   * This function updates the URL everytime nominations are added/removed.
+   * @param nominations the nominations array from the Context component state
+   */
+  const updateURL = useCallback((nominations: Array<ITitleData>) => {
     const basePath =
       window.location.protocol + "//" + window.location.host + "/";
 
     if (nominations?.length !== 0) {
       let queryString = qs.stringify({
-        imdbID: nominations?.map((title) => title.imdbID).join("&"),
+        imdbID: nominations?.map((title) => title.imdbID).join(","),
       });
       let updatedURL = basePath + "?" + queryString;
       window.history.replaceState({ path: updatedURL }, "", updatedURL);
     } else {
       window.history.replaceState({ path: basePath }, "", basePath);
     }
-  };
+  }, []);
 
   /**
    * Get existing IDs from a shared link from a previous instance.
@@ -65,27 +70,34 @@ const Context: React.FC = () => {
   const getExistingIds = useCallback(
     (idArray: Array<string>) => {
       if (idArray?.length === 5 && nominations?.length === 0) {
-        idArray.forEach((idx) => {
-          console.log(idx);
-          client
+        // setSharedLinkCheck(true);
+        let updatedNominations: Array<ITitleData> = [];
+        idArray.forEach(async (idx) => {
+          const titleData: ITitleData = await client
             .query<ITitleIdData, ITitleGetVar>({
               query: GET_TITLE,
               variables: { id: idx },
             })
             .then((resp) => {
-              console.log(resp.data?.title);
+              return resp.data?.title;
             })
             .catch((err) => err);
+
+          updatedNominations.push(titleData);
         });
+        setNominations(updatedNominations);
       }
     },
     [client, nominations]
   );
 
   useEffect(() => {
+    // if a URL with 5 ids is passed and the app wasn't used before (0 prior nominations)
+    if (idsFromUrl?.length === 5 && nominations?.length === 0) {
+      getExistingIds(idsFromUrl); // make API calls for each id and setNominations to array from the ids
+    }
     updateURL(nominations);
-    getExistingIds(idsFromUrl);
-  }, [nominations, idsFromUrl, getExistingIds]);
+  }, [nominations, idsFromUrl, getExistingIds, updateURL, setNominations]);
 
   return (
     <Layout>
@@ -103,10 +115,14 @@ const Context: React.FC = () => {
         ></ResultList>
       </Layout.Section>
       <Layout.Section oneHalf>
-        <NominationList
-          nominations={nominations}
-          setNominations={setNominations}
-        ></NominationList>
+        {nominations.length === 0 ? (
+          <></>
+        ) : (
+          <NominationList
+            nominations={nominations}
+            setNominations={setNominations}
+          ></NominationList>
+        )}
       </Layout.Section>
     </Layout>
   );

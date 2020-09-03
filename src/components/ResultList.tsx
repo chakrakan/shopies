@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import {
   Card,
   Button,
@@ -11,6 +11,8 @@ import {
   Link,
   TextContainer,
   ButtonGroup,
+  Toast,
+  Frame,
 } from "@shopify/polaris";
 import { ITitleData, ITitleSearchData } from "../types/Title";
 import NoImg from "../assets/no-img.png";
@@ -34,10 +36,31 @@ const ResultList: React.FC<IResultList> = ({
   nominations,
   setNominations,
 }) => {
+  const [active, setActive] = useState(false);
+
+  const toggleActive = useCallback(() => {
+    saveLink();
+    setActive((active) => !active);
+  }, []);
+
+  const toastMarkup = active ? (
+    <Toast content="Link Copied!" onDismiss={toggleActive} />
+  ) : null;
+
   const searchData = titles?.titles.Search;
+
   const nominate = (id: string) => {
-    const nominatedTitle = searchData?.find((title) => title.imdbID === id);
+    const nominatedTitle: ITitleData | undefined = searchData?.find(
+      (title) => title.imdbID === id
+    );
     setNominations([...nominations, nominatedTitle]);
+  };
+
+  /**
+   * Copies the created URL from window.location.href to be shared
+   */
+  const saveLink = () => {
+    navigator.clipboard.writeText(window.location.href);
   };
 
   return !searchData && currentTitle.length < 1 ? (
@@ -71,42 +94,48 @@ const ResultList: React.FC<IResultList> = ({
       </Card.Section>
     </Card>
   ) : nominations.length === 5 ? (
-    <Card
-      title={
-        isLoading && isCalled ? (
-          <Spinner
-            accessibilityLabel="Loading search results"
-            size="large"
-            color="teal"
-          ></Spinner>
-        ) : (
-          `Share Nominations`
-        )
-      }
-      sectioned
-    >
-      <Banner status="success">
-        <p>You have nominated 5 movies!</p>
-      </Banner>
-      <Card.Section>
-        <TextContainer spacing="loose">
-          <p>
-            Click <strong>Share</strong> to receive a link that provides a quick
-            overview of your nominations to someone on the browser.<br></br>
-            <br></br>
-            Alternatively, you can choose to <strong>Download</strong> your
-            nominations data in JSON format.
-          </p>
-          <hr></hr>
-          <ButtonGroup fullWidth>
-            <Button size="medium">Share</Button>
-            <Button size="medium" primary>
-              Download
-            </Button>
-          </ButtonGroup>
-        </TextContainer>
-      </Card.Section>
-    </Card>
+    <Frame>
+      <Card
+        title={
+          isLoading && isCalled ? (
+            <Spinner
+              accessibilityLabel="Loading search results"
+              size="large"
+              color="teal"
+            ></Spinner>
+          ) : (
+            `Share Nominations`
+          )
+        }
+        sectioned
+      >
+        <Banner status="success">
+          <p>You have nominated 5 movies!</p>
+        </Banner>
+        <Card.Section>
+          <TextContainer spacing="loose">
+            <p>
+              Click <strong>Share</strong> to receive a link that provides a
+              quick overview of your nominations to someone on the browser.
+              <br></br>
+              <br></br>
+              Alternatively, you can choose to <strong>Download</strong> your
+              nominations data in JSON format.
+            </p>
+            <hr></hr>
+            <ButtonGroup fullWidth>
+              <Button size="medium" onClick={toggleActive}>
+                Share
+              </Button>
+              <Button size="medium" primary>
+                Download
+              </Button>
+            </ButtonGroup>
+          </TextContainer>
+        </Card.Section>
+        {toastMarkup}
+      </Card>
+    </Frame>
   ) : (
     <Card
       title={
