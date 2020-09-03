@@ -87,15 +87,27 @@ const ResultList: React.FC<IResultList> = ({
     >
       <Card.Section title="Info">
         <TextStyle variation="subdued">
-          <span role="img" aria-label="clapper-board">
-            ℹ️
-          </span>{" "}
-          Click on a movie <strong>title</strong> to find out more about it on
-          IMDB<br></br>
-          <span role="img" aria-label="trophy">
-            🏆
-          </span>{" "}
-          You can nominate <strong>{5 - nominations?.length}</strong> movies!
+          {nominations.length !== 5 ? (
+            <p>
+              <span role="img" aria-label="clapper-board">
+                ℹ️
+              </span>{" "}
+              Click on a movie <strong>title</strong> to find out more about it
+              on IMDB<br></br>
+              <span role="img" aria-label="trophy">
+                🏆
+              </span>{" "}
+              You can nominate <strong>{5 - nominations?.length}</strong>{" "}
+              movies!
+            </p>
+          ) : (
+            <p>
+              <span role="img" aria-label="trophy">
+                🏆
+              </span>{" "}
+              The nominations are in...
+            </p>
+          )}
         </TextStyle>
       </Card.Section>
 
@@ -140,7 +152,7 @@ const ResultList: React.FC<IResultList> = ({
                 disabled={
                   nominations.find(
                     (nominated) => nominated.imdbID === title.imdbID
-                  ) !== undefined
+                  ) !== undefined || nominations.length >= 5
                 }
               >
                 Nominate

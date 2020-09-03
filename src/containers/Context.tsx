@@ -20,11 +20,9 @@ import qs from "querystring";
 const Context: React.FC = () => {
   const [title, setTitle] = useState("");
   const [nominations, setNominations] = useState<Array<ITitleData>>(
-    localStorage["nominations"]
-      ? (JSON.parse(localStorage.getItem("nominations") || "[]") as Array<
-          ITitleData
-        >)
-      : []
+    (JSON.parse(localStorage.getItem("nominations") || "[]") as Array<
+      ITitleData
+    >) || []
   );
   const [refetch, { called, loading, data: searchData }] = useLazyQuery(
     SEARCH_TITLE
@@ -69,8 +67,7 @@ const Context: React.FC = () => {
 
   /**
    * Get existing IDs from a shared link from a previous instance.
-   * We know that one can only share a link if they picked 5 total nominations as per requirements
-   * Therefore, check if querystring (delimited by ? and split by =) has 5 ids.
+   * Check if querystring (delimited by ? and split by =) has 5 ids.
    * If so, make the GET_TITLE call for each one and populate nominations list
    */
   const getExistingIds = useCallback(
@@ -96,6 +93,7 @@ const Context: React.FC = () => {
 
   useEffect(() => {
     updateURL(nominations);
+    // initialize localstorage with empty nominations field
     localStorage.setItem("nominations", JSON.stringify(nominations));
   }, [nominations, updateURL]);
 
@@ -104,7 +102,7 @@ const Context: React.FC = () => {
       .parse(window.location.search)
       ["?imdbID"]?.toString()
       .split(",");
-    // if a URL with 5 ids is passed and the app wasn't used before (0 prior nominations)
+    // if a URL with ids is passed and the app wasn't used before (0 prior nominations)
     if (idsFromUrl?.length > 0 && nominations?.length === 0) {
       getExistingIds(idsFromUrl); // make API calls for each id and setNominations to array from the ids
     }
