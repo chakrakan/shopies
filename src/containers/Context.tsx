@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useLayoutEffect,
+  useEffect,
+} from "react";
 import { Layout } from "@shopify/polaris";
 import ResultList from "../components/ResultList";
 import SearchBox from "../components/SearchBox";
@@ -13,7 +19,6 @@ import qs from "querystring";
  */
 const Context: React.FC = () => {
   const [title, setTitle] = useState("");
-  // const [sharedLinkCheck, setSharedLinkCheck] = useState(false);
   const [nominations, setNominations] = useState<Array<ITitleData>>([]);
   const [refetch, { called, loading, data: searchData }] = useLazyQuery(
     SEARCH_TITLE
@@ -70,7 +75,6 @@ const Context: React.FC = () => {
   const getExistingIds = useCallback(
     (idArray: Array<string>) => {
       if (idArray?.length === 5 && nominations?.length === 0) {
-        // setSharedLinkCheck(true);
         let updatedNominations: Array<ITitleData> = [];
         idArray.forEach(async (idx) => {
           const titleData: ITitleData = await client
@@ -92,17 +96,28 @@ const Context: React.FC = () => {
   );
 
   useEffect(() => {
+    updateURL(nominations);
+  }, [nominations, updateURL]);
+
+  useLayoutEffect(() => {
     // if a URL with 5 ids is passed and the app wasn't used before (0 prior nominations)
     if (idsFromUrl?.length === 5 && nominations?.length === 0) {
       getExistingIds(idsFromUrl); // make API calls for each id and setNominations to array from the ids
     }
-    updateURL(nominations);
-  }, [nominations, idsFromUrl, getExistingIds, updateURL, setNominations]);
+    console.log(nominations);
+
+    // TODO: if you provide 5 id's in the URL, it switches back to base URL
+    // TODO: Render the child components based on the state after reading in the 5 IDs
+  }, [getExistingIds, setNominations, idsFromUrl, nominations]);
 
   return (
     <Layout>
       <Layout.Section>
-        <SearchBox title={title} onChange={onSearchChange}></SearchBox>
+        <SearchBox
+          title={title}
+          nominations={nominations}
+          onChange={onSearchChange}
+        ></SearchBox>
       </Layout.Section>
       <Layout.Section oneHalf>
         <ResultList

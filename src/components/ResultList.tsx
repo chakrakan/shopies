@@ -110,7 +110,7 @@ const ResultList: React.FC<IResultList> = ({
         sectioned
       >
         <Banner status="success">
-          <p>You have nominated 5 movies!</p>
+          <p>You have finalized 5 nominations!</p>
         </Banner>
         <Card.Section>
           <TextContainer spacing="loose">
@@ -127,7 +127,14 @@ const ResultList: React.FC<IResultList> = ({
               <Button size="medium" onClick={toggleActive}>
                 Share
               </Button>
-              <Button size="medium" primary>
+              <Button
+                download="nominations.json"
+                url={`data:text/json;charset=utf-8,${encodeURIComponent(
+                  JSON.stringify(nominations)
+                )}`}
+                size="medium"
+                primary
+              >
                 Download
               </Button>
             </ButtonGroup>
