@@ -1,4 +1,4 @@
-tabWidth:
+tabWidth: 2
 arrowParens: avoid
 bracketSpacing: true
 semi: true
