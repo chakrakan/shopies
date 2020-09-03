@@ -1,11 +1,12 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { Layout } from "@shopify/polaris";
 import ResultList from "../components/ResultList";
 import SearchBox from "../components/SearchBox";
 import NominationList from "../components/NominationList";
-import { SEARCH_TITLE } from "../gql/Queries";
-import { useLazyQuery } from "@apollo/client";
-import { ITitleData } from "../types/Title";
+import { SEARCH_TITLE, GET_TITLE } from "../gql/Queries";
+import { useLazyQuery, useApolloClient } from "@apollo/client";
+import { ITitleData, ITitleGetVar, ITitleIdData } from "../types/Title";
+import qs from "querystring";
 
 /**
  * This will hold the context for the child Componenets
@@ -16,6 +17,12 @@ const Context: React.FC = () => {
   const [refetch, { called, loading, data: searchData }] = useLazyQuery(
     SEARCH_TITLE
   );
+  const client = useApolloClient();
+  const idsFromUrl = qs
+    .parse(window.location.search)
+    ["?imdbID"]?.toString()
+    .split("&");
+
   const searchTimeout = useRef<number | null>(null);
 
   /**
@@ -33,6 +40,52 @@ const Context: React.FC = () => {
     },
     [setTitle, refetch]
   );
+
+  const updateURL = (nominations: Array<ITitleData>) => {
+    const basePath =
+      window.location.protocol + "//" + window.location.host + "/";
+
+    if (nominations?.length !== 0) {
+      let queryString = qs.stringify({
+        imdbID: nominations?.map((title) => title.imdbID).join("&"),
+      });
+      let updatedURL = basePath + "?" + queryString;
+      window.history.replaceState({ path: updatedURL }, "", updatedURL);
+    } else {
+      window.history.replaceState({ path: basePath }, "", basePath);
+    }
+  };
+
+  /**
+   * Get existing IDs from a shared link from a previous instance.
+   * We know that one can only share a link if they picked 5 total nominations as per requirements
+   * Therefore, check if querystring (delimited by ? and split by =) has 5 ids.
+   * If so, make the GET_TITLE call for each one and populate nominations list
+   */
+  const getExistingIds = useCallback(
+    (idArray: Array<string>) => {
+      if (idArray?.length === 5 && nominations?.length === 0) {
+        idArray.forEach((idx) => {
+          console.log(idx);
+          client
+            .query<ITitleIdData, ITitleGetVar>({
+              query: GET_TITLE,
+              variables: { id: idx },
+            })
+            .then((resp) => {
+              console.log(resp.data?.title);
+            })
+            .catch((err) => err);
+        });
+      }
+    },
+    [client, nominations]
+  );
+
+  useEffect(() => {
+    updateURL(nominations);
+    getExistingIds(idsFromUrl);
+  }, [nominations, idsFromUrl, getExistingIds]);
 
   return (
     <Layout>

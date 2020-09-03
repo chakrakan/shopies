@@ -16,10 +16,10 @@ export const SEARCH_TITLE = gql`
     }
   `;
 
-// Query to get a single title using ?t or i from OMDB
+// Query to get a single title using ?i from OMDB
 export const GET_TITLE = gql`
   query GetTitle($title: String) {
-    title(t: $title) @rest(method: "GET", path: "?type=movie&apikey=${process.env.REACT_APP_API_KEY}&{args}") {
+    title(i: $id) @rest(method: "GET", path: "?type=movie&apikey=${process.env.REACT_APP_API_KEY}&{args}") {
       Title
       Year
       imdbID
