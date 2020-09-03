@@ -1,0 +1,7 @@
+docs
+public
+node_modules
+*.md
+*.svg
+*.png
+.env*
