@@ -13,6 +13,9 @@ import qs from "querystring";
  */
 const Context: React.FC = () => {
   const [title, setTitle] = useState("");
+  const [users, setUsers] = useState<Array<string>>([]);
+  const [shareableLink, setShareableLink] = useState("");
+  const [listTitle, setListTitle] = useState("");
   const [nominations, setNominations] = useState<Array<ITitleData>>(
     (JSON.parse(localStorage.getItem("nominations") || "[]") as Array<
       ITitleData
@@ -52,20 +55,20 @@ const Context: React.FC = () => {
   const getExistingIds = useCallback(
     (idArray: Array<string>) => {
       Promise.all(
-        idArray.map(async (idx) => {
+        idArray.map(async idx => {
           const titleData: ITitleData = await client
             .query<ITitleIdData, ITitleGetVar>({
               query: GET_TITLE,
               variables: { id: idx },
             })
-            .then((resp) => {
+            .then(resp => {
               return resp.data?.title;
             })
-            .catch((err) => err);
+            .catch(err => err);
 
           return titleData;
         })
-      ).then((titleDatas) => {
+      ).then(titleDatas => {
         setNominations(titleDatas);
       });
     },
