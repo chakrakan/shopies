@@ -23,6 +23,10 @@ const Context: React.FC = () => {
   );
   const client = useApolloClient();
   const searchTimeout = useRef<number | null>(null);
+  const idsFromUrl = qs
+    .parse(window.location.search)
+    ["?imdbID"]?.toString()
+    .split(",");
 
   /**
    *  https://github.com/lodash/lodash/blob/master/debounce.js
@@ -61,7 +65,9 @@ const Context: React.FC = () => {
 
           return titleData;
         })
-      ).then((titleDatas) => setNominations(titleDatas));
+      ).then((titleDatas) => {
+        setNominations(titleDatas);
+      });
     },
     [client]
   );
@@ -69,17 +75,11 @@ const Context: React.FC = () => {
   useEffect(() => {
     // updateURL(nominations);
     // initialize localstorage with empty nominations field
-    const idsFromUrl = qs
-      .parse(window.location.search)
-      ["?imdbID"]?.toString()
-      .split(",");
     // if a URL with ids is passed and the app wasn't used before (0 prior nominations)
     if (idsFromUrl?.length > 0) {
       getExistingIds(idsFromUrl); // make API calls for each id and setNominations to array from the ids
     }
-
-    localStorage.setItem("nominations", JSON.stringify(nominations));
-  }, [nominations, getExistingIds, setNominations]);
+  }, [nominations, idsFromUrl, getExistingIds, setNominations]);
 
   return (
     <Layout>
@@ -107,6 +107,7 @@ const Context: React.FC = () => {
           <NominationList
             nominations={nominations}
             setNominations={setNominations}
+            urlIds={idsFromUrl}
           ></NominationList>
         )}
       </Layout.Section>

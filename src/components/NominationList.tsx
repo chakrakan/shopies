@@ -15,17 +15,23 @@ import {
 } from "@shopify/polaris";
 import { ITitleData } from "../types/Title";
 import NoImg from "../assets/no-img.png";
-import { ShareMinor, PageDownMajorMonotone } from "@shopify/polaris-icons";
+import {
+  SaveMinor,
+  ShareMinor,
+  PinMajorMonotone,
+} from "@shopify/polaris-icons";
 import qs from "querystring";
 
 interface INominations {
   nominations: Array<ITitleData>;
   setNominations: Function;
+  urlIds: Array<string>;
 }
 
 const NominationList: React.FC<INominations> = ({
   nominations,
   setNominations,
+  urlIds,
 }) => {
   /**
    * Remove a nomination from the nominations state
@@ -36,6 +42,7 @@ const NominationList: React.FC<INominations> = ({
       (title: ITitleData) => title.imdbID !== id
     );
     setNominations(updatedList);
+    localStorage.removeItem("nominations");
   };
 
   /**
@@ -49,6 +56,10 @@ const NominationList: React.FC<INominations> = ({
     });
     let updatedURL = basePath + "?" + queryString;
     navigator.clipboard.writeText(updatedURL);
+  }, [nominations]);
+
+  const pinNominations = useCallback(() => {
+    localStorage.setItem("nominations", JSON.stringify(nominations));
   }, [nominations]);
 
   /**
@@ -80,6 +91,7 @@ const NominationList: React.FC<INominations> = ({
         ) : (
           <></>
         )}
+
         <Card.Section title="Info">
           <TextContainer spacing="loose">
             <p>
@@ -92,11 +104,20 @@ const NominationList: React.FC<INominations> = ({
             </p>
             <hr></hr>
             <ButtonGroup fullWidth>
-              <Button icon={ShareMinor} size="medium" onClick={toggleActive}>
-                Share
-              </Button>
+              <ButtonGroup segmented>
+                <Button
+                  icon={PinMajorMonotone}
+                  size="medium"
+                  onClick={pinNominations}
+                >
+                  Pin
+                </Button>
+                <Button icon={ShareMinor} size="medium" onClick={toggleActive}>
+                  Share
+                </Button>
+              </ButtonGroup>
               <Button
-                icon={PageDownMajorMonotone}
+                icon={SaveMinor}
                 download="nominations.json"
                 url={`data:application/json;charset=utf-8,${encodeURIComponent(
                   JSON.stringify(nominations)
@@ -110,12 +131,17 @@ const NominationList: React.FC<INominations> = ({
           </TextContainer>
         </Card.Section>
         <Card.Section title="Titles">
-          <TextStyle variation="subdued">
-            <span role="img" aria-label="cross">
-              ❎
-            </span>{" "}
-            Remove nominations if you change your mind about a choice.
-          </TextStyle>
+          {urlIds?.length > 0 ? (
+            <></>
+          ) : (
+            <TextStyle variation="subdued">
+              <span role="img" aria-label="cross">
+                ❎
+              </span>{" "}
+              Remove nominations if you change your mind about a choice.
+            </TextStyle>
+          )}
+
           {nominations.map((title: ITitleData) => (
             <ResourceItem
               key={title.imdbID}
@@ -149,13 +175,17 @@ const NominationList: React.FC<INominations> = ({
               </div>
               <br></br>
               <div>
-                <Button
-                  outline
-                  onClick={() => removeNomination(title.imdbID)}
-                  size="slim"
-                >
-                  Remove
-                </Button>
+                {urlIds?.length > 0 ? (
+                  <></>
+                ) : (
+                  <Button
+                    outline
+                    onClick={() => removeNomination(title.imdbID)}
+                    size="slim"
+                  >
+                    Remove
+                  </Button>
+                )}
               </div>
             </ResourceItem>
           ))}
