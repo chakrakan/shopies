@@ -2,15 +2,12 @@ import React from "react";
 import {
   Card,
   Button,
-  Banner,
   TextStyle,
   Spinner,
   ResourceItem,
   Thumbnail,
   Badge,
   Link,
-  TextContainer,
-  ButtonGroup,
 } from "@shopify/polaris";
 import { ITitleData, ITitleSearchData } from "../types/Title";
 import NoImg from "../assets/no-img.png";
@@ -35,8 +32,11 @@ const ResultList: React.FC<IResultList> = ({
   setNominations,
 }) => {
   const searchData = titles?.titles.Search;
+
   const nominate = (id: string) => {
-    const nominatedTitle = searchData?.find((title) => title.imdbID === id);
+    const nominatedTitle: ITitleData | undefined = searchData?.find(
+      (title) => title.imdbID === id
+    );
     setNominations([...nominations, nominatedTitle]);
   };
 
@@ -70,43 +70,6 @@ const ResultList: React.FC<IResultList> = ({
         </TextStyle>
       </Card.Section>
     </Card>
-  ) : nominations.length === 5 ? (
-    <Card
-      title={
-        isLoading && isCalled ? (
-          <Spinner
-            accessibilityLabel="Loading search results"
-            size="large"
-            color="teal"
-          ></Spinner>
-        ) : (
-          `Share Nominations`
-        )
-      }
-      sectioned
-    >
-      <Banner status="success">
-        <p>You have nominated 5 movies!</p>
-      </Banner>
-      <Card.Section>
-        <TextContainer spacing="loose">
-          <p>
-            Click <strong>Share</strong> to receive a link that provides a quick
-            overview of your nominations to someone on the browser.<br></br>
-            <br></br>
-            Alternatively, you can choose to <strong>Download</strong> your
-            nominations data in JSON format.
-          </p>
-          <hr></hr>
-          <ButtonGroup fullWidth>
-            <Button size="medium">Share</Button>
-            <Button size="medium" primary>
-              Download
-            </Button>
-          </ButtonGroup>
-        </TextContainer>
-      </Card.Section>
-    </Card>
   ) : (
     <Card
       title={
@@ -124,15 +87,27 @@ const ResultList: React.FC<IResultList> = ({
     >
       <Card.Section title="Info">
         <TextStyle variation="subdued">
-          <span role="img" aria-label="clapper-board">
-            ℹ️
-          </span>{" "}
-          Click on a movie <strong>title</strong> to find out more about it on
-          IMDB<br></br>
-          <span role="img" aria-label="trophy">
-            🏆
-          </span>{" "}
-          You can nominate <strong>{5 - nominations?.length}</strong> movies!
+          {nominations.length !== 5 ? (
+            <p>
+              <span role="img" aria-label="clapper-board">
+                ℹ️
+              </span>{" "}
+              Click on a movie <strong>title</strong> to find out more about it
+              on IMDB<br></br>
+              <span role="img" aria-label="trophy">
+                🏆
+              </span>{" "}
+              You can nominate <strong>{5 - nominations?.length}</strong>{" "}
+              movies!
+            </p>
+          ) : (
+            <p>
+              <span role="img" aria-label="trophy">
+                🏆
+              </span>{" "}
+              The nominations are in...
+            </p>
+          )}
         </TextStyle>
       </Card.Section>
 
@@ -177,7 +152,7 @@ const ResultList: React.FC<IResultList> = ({
                 disabled={
                   nominations.find(
                     (nominated) => nominated.imdbID === title.imdbID
-                  ) !== undefined
+                  ) !== undefined || nominations.length >= 5
                 }
               >
                 Nominate

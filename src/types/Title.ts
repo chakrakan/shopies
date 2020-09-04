@@ -18,10 +18,20 @@ export interface ITitleSearchData {
   };
 }
 
+export interface ITitleIdData {
+  title: {
+    Title: string;
+    Year: string;
+    imdbID: string;
+    Type: string;
+    Poster: string;
+  };
+}
+
 export interface ITitleSearchVar {
   s: string;
 }
 
 export interface ITitleGetVar {
-  t: string;
+  id: string;
 }
