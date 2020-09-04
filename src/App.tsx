@@ -10,7 +10,7 @@ const App = () => {
   // https://www.apollographql.com/docs/react/api/link/apollo-link-rest/#gatsby-focus-wrapper
   const restLink = new RestLink({
     uri: process.env.REACT_APP_BASE_API,
-    responseTransformer: async (response) =>
+    responseTransformer: async response =>
       response.json().then((data: JSON) => data),
   });
   const client = new ApolloClient({

@@ -12,6 +12,9 @@ import {
   Banner,
   TextContainer,
   ButtonGroup,
+  Collapsible,
+  TextField,
+  Stack,
 } from "@shopify/polaris";
 import { ITitleData } from "../types/Title";
 import NoImg from "../assets/no-img.png";
@@ -26,13 +29,35 @@ interface INominations {
   nominations: Array<ITitleData>;
   setNominations: Function;
   urlIds: Array<string>;
+  user: string;
+  users: Array<string>;
+  usersFromUrl: Array<string>;
+  setUsers: Function;
+  listName: string;
+  lnameFromUrl: string;
+  setUserName: Function;
+  setListName: Function;
 }
 
 const NominationList: React.FC<INominations> = ({
   nominations,
   setNominations,
   urlIds,
+  user,
+  users,
+  setUsers,
+  lnameFromUrl,
+  usersFromUrl,
+  listName,
+  setUserName,
+  setListName,
 }) => {
+  const [collapsibleActive, setCollapsibleActive] = useState(false);
+
+  const handleCollapsibleToggle = useCallback(
+    () => setCollapsibleActive(active => !active),
+    []
+  );
   /**
    * Remove a nomination from the nominations state
    * @param id ID of said title to be removed
@@ -51,12 +76,15 @@ const NominationList: React.FC<INominations> = ({
   const saveLink = useCallback(() => {
     const basePath =
       window.location.protocol + "//" + window.location.host + "/";
+
     let queryString = qs.stringify({
-      imdbID: nominations?.map((title) => title.imdbID).join(","),
+      imdbID: nominations?.map(title => title.imdbID).join(","),
+      users: user,
+      lname: listName,
     });
     let updatedURL = basePath + "?" + queryString;
     navigator.clipboard.writeText(updatedURL);
-  }, [nominations]);
+  }, [nominations, listName, user]);
 
   const pinNominations = useCallback(() => {
     localStorage.setItem("nominations", JSON.stringify(nominations));
@@ -66,10 +94,20 @@ const NominationList: React.FC<INominations> = ({
    *  Tost from Polaris
    */
   const [active, setActive] = useState(false);
+  const [pinActive, setPinActive] = useState(false);
+
+  const togglePinActive = useCallback(() => {
+    pinNominations();
+    setPinActive(active => !active);
+  }, [pinNominations]);
+
+  const pinToastMarkup = pinActive ? (
+    <Toast content="Nominations Pinned!" onDismiss={togglePinActive} />
+  ) : null;
 
   const toggleActive = useCallback(() => {
     saveLink();
-    setActive((active) => !active);
+    setActive(active => !active);
   }, [saveLink]);
 
   const toastMarkup = active ? (
@@ -94,45 +132,106 @@ const NominationList: React.FC<INominations> = ({
 
         <Card.Section title="Info">
           <TextContainer spacing="loose">
-            <p>
-              Click <strong>Share</strong> to receive a link that provides a
-              quick overview of your nominations to someone on the browser.
-              <br></br>
-              <br></br>
-              Alternatively, you can choose to <strong>Download</strong> your
-              nominations data in JSON format.
-            </p>
-            <hr></hr>
-            <ButtonGroup fullWidth>
-              <ButtonGroup segmented>
-                <Button
-                  icon={PinMajorMonotone}
-                  size="medium"
-                  onClick={pinNominations}
-                >
-                  Pin
-                </Button>
-                <Button icon={ShareMinor} size="medium" onClick={toggleActive}>
-                  Share
-                </Button>
-              </ButtonGroup>
-              <Button
-                icon={SaveMinor}
-                download="nominations.json"
-                url={`data:application/json;charset=utf-8,${encodeURIComponent(
-                  JSON.stringify(nominations)
-                )}`}
-                size="medium"
-                primary
-              >
-                Download
-              </Button>
-            </ButtonGroup>
+            <ul>
+              <li>
+                Click <strong>Share</strong> to receive a link that provides a
+                quick overview of your nominations to someone on the browser.
+              </li>
+              <li>
+                Feel free to name the list and add yourself as a contributor.
+              </li>
+              <li>
+                Alternatively, you can choose to <strong>Download</strong> your
+                nominations data in JSON format.
+              </li>
+            </ul>
           </TextContainer>
         </Card.Section>
-        <Card.Section title="Titles">
-          {urlIds?.length > 0 ? (
-            <></>
+        {urlIds?.length === 5 ? (
+          <></>
+        ) : (
+          <Card.Section title="Add details">
+            <Stack vertical>
+              <Button onClick={handleCollapsibleToggle} primary fullWidth>
+                Add User Info
+              </Button>
+              <Collapsible
+                open={collapsibleActive}
+                id="basic-collapsible"
+                transition={{ duration: "150ms", timingFunction: "ease" }}
+              >
+                {urlIds?.length > 0 ? (
+                  <></>
+                ) : (
+                  <TextField
+                    value={listName}
+                    onChange={e => {
+                      if (e === "") {
+                        setListName("Anonymous List");
+                      }
+                      setListName(e);
+                    }}
+                    label="List Name"
+                    type="text"
+                  />
+                )}
+
+                <TextField
+                  value={user}
+                  onChange={e => {
+                    if (e === "") {
+                      setUserName("Anonymous User");
+                    }
+                    setUserName(e);
+                  }}
+                  label="Your Name"
+                  type="text"
+                />
+              </Collapsible>
+            </Stack>
+          </Card.Section>
+        )}
+
+        <Card.Section>
+          <ButtonGroup fullWidth>
+            <ButtonGroup segmented>
+              <Button
+                icon={PinMajorMonotone}
+                size="medium"
+                onClick={togglePinActive}
+              >
+                Pin
+              </Button>
+              <Button icon={ShareMinor} size="medium" onClick={toggleActive}>
+                Share
+              </Button>
+            </ButtonGroup>
+            <Button
+              icon={SaveMinor}
+              download="nominations.json"
+              url={`data:application/json;charset=utf-8,${encodeURIComponent(
+                JSON.stringify(nominations)
+              )}`}
+              size="medium"
+              primary
+            >
+              Download
+            </Button>
+          </ButtonGroup>
+        </Card.Section>
+        <Card.Section
+          title={
+            urlIds?.length === 0
+              ? "Titles"
+              : lnameFromUrl === ""
+              ? "Anonymous List"
+              : lnameFromUrl
+          }
+        >
+          {usersFromUrl?.length > 0 ? (
+            <TextStyle variation="subdued">
+              By {usersFromUrl?.join(", ")}
+            </TextStyle>
           ) : (
             <TextStyle variation="subdued">
               <span role="img" aria-label="cross">
@@ -191,6 +290,7 @@ const NominationList: React.FC<INominations> = ({
           ))}
         </Card.Section>
         {toastMarkup}
+        {pinToastMarkup}
       </Card>
     </Frame>
   );

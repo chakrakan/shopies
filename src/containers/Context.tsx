@@ -13,8 +13,8 @@ import qs from "querystring";
  */
 const Context: React.FC = () => {
   const [title, setTitle] = useState("");
+  const [user, setUser] = useState("");
   const [users, setUsers] = useState<Array<string>>([]);
-  const [shareableLink, setShareableLink] = useState("");
   const [listTitle, setListTitle] = useState("");
   const [nominations, setNominations] = useState<Array<ITitleData>>(
     (JSON.parse(localStorage.getItem("nominations") || "[]") as Array<
@@ -30,6 +30,13 @@ const Context: React.FC = () => {
     .parse(window.location.search)
     ["?imdbID"]?.toString()
     .split(",");
+
+  const usersFromUrl = qs
+    .parse(window.location.search)
+    ["users"]?.toString()
+    .split(",");
+
+  const lnameFromUrl = qs.parse(window.location.search)["lname"]?.toString();
 
   /**
    *  https://github.com/lodash/lodash/blob/master/debounce.js
@@ -82,7 +89,18 @@ const Context: React.FC = () => {
     if (idsFromUrl?.length > 0) {
       getExistingIds(idsFromUrl); // make API calls for each id and setNominations to array from the ids
     }
-  }, [nominations, idsFromUrl, getExistingIds, setNominations]);
+  }, [
+    nominations,
+    idsFromUrl,
+    getExistingIds,
+    setNominations,
+    user,
+    listTitle,
+    setUsers,
+    setListTitle,
+    usersFromUrl,
+    lnameFromUrl,
+  ]);
 
   return (
     <Layout>
@@ -111,6 +129,14 @@ const Context: React.FC = () => {
             nominations={nominations}
             setNominations={setNominations}
             urlIds={idsFromUrl}
+            usersFromUrl={usersFromUrl}
+            user={user}
+            users={users}
+            setUsers={setUsers}
+            listName={listTitle}
+            lnameFromUrl={lnameFromUrl}
+            setUserName={setUser}
+            setListName={setListTitle}
           ></NominationList>
         )}
       </Layout.Section>
