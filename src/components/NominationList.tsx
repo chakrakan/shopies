@@ -176,9 +176,16 @@ const NominationList: React.FC<INominations> = ({
         ) : (
           <Card.Section>
             <Stack vertical>
-              <Button onClick={handleCollapsibleToggle} outline fullWidth>
-                Edit Details
-              </Button>
+              <div style={{ color: "#5c6ac4" }}>
+                <Button
+                  onClick={handleCollapsibleToggle}
+                  monochrome
+                  outline
+                  fullWidth
+                >
+                  Edit Details
+                </Button>
+              </div>
               <Collapsible
                 open={collapsibleActive}
                 id="basic-collapsible"
