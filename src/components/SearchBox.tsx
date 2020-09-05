@@ -26,7 +26,7 @@ const SearchBox: React.FC<ISearchBox> = ({
         placeholder="Search Title..."
         value={title}
         onChange={onChange}
-        disabled={nominations.length === 5 ? true : false}
+        disabled={nominations.length >= 5 ? true : false}
       />
     </Card>
   );

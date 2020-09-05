@@ -35,7 +35,7 @@ const ResultList: React.FC<IResultList> = ({
 
   const nominate = (id: string) => {
     const nominatedTitle: ITitleData | undefined = searchData?.find(
-      (title) => title.imdbID === id
+      title => title.imdbID === id
     );
     setNominations([...nominations, nominatedTitle]);
   };
@@ -151,7 +151,7 @@ const ResultList: React.FC<IResultList> = ({
                 onClick={() => nominate(title.imdbID)}
                 disabled={
                   nominations.find(
-                    (nominated) => nominated.imdbID === title.imdbID
+                    nominated => nominated.imdbID === title.imdbID
                   ) !== undefined || nominations.length >= 5
                 }
               >

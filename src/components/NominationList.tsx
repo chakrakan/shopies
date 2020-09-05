@@ -77,35 +77,28 @@ const NominationList: React.FC<INominations> = ({
   const saveLink = useCallback(() => {
     const basePath =
       window.location.protocol + "//" + window.location.host + "/";
-    // initial case: new instance of app and no prior link pushed
-    const currUser = user === "" ? "Anonymous User" : user;
-    const currList = user === "" ? "Anonymmous List" : listName;
 
+    const currUser = user === "" ? "Anonymous User" : user;
+    const usersQueryValue = [...users, currUser];
     let queryString = qs.stringify({
       imdbID: nominations?.map(title => title.imdbID).join(","),
-      users: currUser,
-      lname: currList,
+      users: usersQueryValue.join(","),
+      lname: listName === "" ? "Anonymmous List" : listName,
     });
 
-    if (users.length > 0) {
-      const usersQueryValue = [...users, currUser];
-      queryString = qs.stringify({
-        imdbID: nominations?.map(title => title.imdbID).join(","),
-        users: usersQueryValue.join(","),
-        lname: listName === "" ? "Anonymmous List" : listName,
-      });
-    }
-
     let updatedURL = basePath + "?" + queryString;
+    console.log(updatedURL);
     navigator.clipboard.writeText(updatedURL);
-  }, [nominations, listName, user, users]);
+  }, [nominations, listName, users, user]);
 
   const pinNominations = useCallback(() => {
     // if user manually tries to add more movies to the URL, don't pin
     if (nominations.length <= 5) {
       localStorage.setItem("nominations", JSON.stringify(nominations));
+      localStorage.setItem("users", JSON.stringify(users));
+      localStorage.setItem("listName", listName);
     }
-  }, [nominations]);
+  }, [nominations, users, listName]);
 
   /**
    *  Tost from Polaris
@@ -120,7 +113,14 @@ const NominationList: React.FC<INominations> = ({
   }, [pinNominations]);
 
   const pinToastMarkup = pinActive ? (
-    <Toast content="Nominations Pinned!" onDismiss={togglePinActive} />
+    <Toast
+      content={
+        nominations?.length <= 5
+          ? "Nominations Pinned!"
+          : "👀 Manuel override detected!"
+      }
+      onDismiss={togglePinActive}
+    />
   ) : null;
 
   const toggleActive = useCallback(() => {
@@ -158,7 +158,7 @@ const NominationList: React.FC<INominations> = ({
     <></>
   ) : (
     <Frame>
-      <Card title="Your Nominations" sectioned>
+      <Card title="Nominations" sectioned>
         {nominations.length === 5 ? (
           <Banner status="success">
             <p>You have finalized 5 nominations!</p>
