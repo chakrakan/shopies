@@ -18,7 +18,7 @@ const Context: React.FC = () => {
     (JSON.parse(localStorage.getItem("users") || "[]") as Array<string>) || []
   );
   const [listTitle, setListTitle] = useState<string>(
-    localStorage["listName"] ? localStorage["listName"] : "Anonymou List"
+    localStorage["listName"] ? localStorage["listName"] : ""
   );
   const [nominations, setNominations] = useState<Array<ITitleData>>(
     (JSON.parse(localStorage.getItem("nominations") || "[]") as Array<
@@ -39,7 +39,7 @@ const Context: React.FC = () => {
   );
 
   const { current: lnameFromUrl } = useRef(
-    qs.parse(window.location.search)["lname"]?.toString()
+    qs.parse(window.location.search)["listname"]?.toString()
   );
 
   /**
@@ -85,6 +85,8 @@ const Context: React.FC = () => {
     },
     [client]
   );
+
+  console.log(listTitle);
 
   useEffect(() => {
     // if a URL with ids is passed and the app wasn't used before (0 prior nominations)

@@ -15,7 +15,6 @@ import {
   Collapsible,
   TextField,
   Stack,
-  Form,
 } from "@shopify/polaris";
 import { ITitleData } from "../types/Title";
 import NoImg from "../assets/no-img.png";
@@ -71,6 +70,10 @@ const NominationList: React.FC<INominations> = ({
     localStorage.removeItem("nominations");
   };
 
+  const toggleActive = useCallback(() => {
+    setActive(active => !active);
+  }, []);
+
   /**
    * Copies the created URL from window.location.href to be shared
    */
@@ -78,27 +81,41 @@ const NominationList: React.FC<INominations> = ({
     const basePath =
       window.location.protocol + "//" + window.location.host + "/";
 
-    const currUser = user === "" ? "Anonymous User" : user;
-    const usersQueryValue = [...users, currUser];
+    let usersQueryValue: Array<string> = [...users];
+    if (user !== "" && users[users?.length - 1] !== user) {
+      usersQueryValue = [...users, user];
+    }
+
     let queryString = qs.stringify({
       imdbID: nominations?.map(title => title.imdbID).join(","),
       users: usersQueryValue.join(","),
-      lname: listName === "" ? "Anonymmous List" : listName,
+      listname: listName,
     });
 
     let updatedURL = basePath + "?" + queryString;
     console.log(updatedURL);
     navigator.clipboard.writeText(updatedURL);
-  }, [nominations, listName, users, user]);
+    toggleActive();
+  }, [nominations, listName, users, toggleActive, user]);
+
+  const togglePinActive = useCallback(() => {
+    setPinActive(active => !active);
+  }, []);
 
   const pinNominations = useCallback(() => {
     // if user manually tries to add more movies to the URL, don't pin
+    let usersQueryValue: Array<string> = [...users];
+    if (user !== "" && users[users?.length - 1] !== user) {
+      usersQueryValue = [...users, user];
+    }
+
     if (nominations.length <= 5) {
       localStorage.setItem("nominations", JSON.stringify(nominations));
-      localStorage.setItem("users", JSON.stringify(users));
+      localStorage.setItem("users", JSON.stringify(usersQueryValue));
       localStorage.setItem("listName", listName);
     }
-  }, [nominations, users, listName]);
+    togglePinActive();
+  }, [nominations, users, listName, togglePinActive, user]);
 
   /**
    *  Tost from Polaris
@@ -106,11 +123,6 @@ const NominationList: React.FC<INominations> = ({
   const [active, setActive] = useState(false);
   const [pinActive, setPinActive] = useState(false);
   const [detailsSubmitActive, setDetailsSubmitActive] = useState(false);
-
-  const togglePinActive = useCallback(() => {
-    pinNominations();
-    setPinActive(active => !active);
-  }, [pinNominations]);
 
   const pinToastMarkup = pinActive ? (
     <Toast
@@ -123,17 +135,9 @@ const NominationList: React.FC<INominations> = ({
     />
   ) : null;
 
-  const toggleActive = useCallback(() => {
-    saveLink();
-    setActive(active => !active);
-  }, [saveLink]);
-
   const toastMarkup = active ? (
     <Toast content="Link Copied!" onDismiss={toggleActive} />
   ) : null;
-  /**
-   * Toast from Polaris
-   */
 
   const toggleDetailsActive = useCallback(() => {
     setDetailsSubmitActive(active => !active);
@@ -173,33 +177,26 @@ const NominationList: React.FC<INominations> = ({
           <Card.Section>
             <Stack vertical>
               <Button onClick={handleCollapsibleToggle} outline fullWidth>
-                Add Details
+                Edit Details
               </Button>
               <Collapsible
                 open={collapsibleActive}
                 id="basic-collapsible"
                 transition={{ duration: "150ms", timingFunction: "ease" }}
               >
-                <Form onSubmit={toggleDetailsActive}>
-                  {urlIds?.length > 0 ? (
-                    <></>
-                  ) : (
-                    <TextField
-                      value={listName}
-                      onChange={handleListTitleChange}
-                      label="List Name"
-                      type="text"
-                    />
-                  )}
+                <TextField
+                  value={listName}
+                  onChange={handleListTitleChange}
+                  label="List Name"
+                  type="text"
+                />
 
-                  <TextField
-                    value={user}
-                    onChange={handleUserChange}
-                    label="Your Name"
-                    type="text"
-                  />
-                  <Button submit>Submit</Button>
-                </Form>
+                <TextField
+                  value={user}
+                  onChange={handleUserChange}
+                  label="Your Name"
+                  type="text"
+                />
               </Collapsible>
             </Stack>
           </Card.Section>
@@ -231,11 +228,11 @@ const NominationList: React.FC<INominations> = ({
               <Button
                 icon={PinMajorMonotone}
                 size="medium"
-                onClick={togglePinActive}
+                onClick={pinNominations}
               >
                 Pin
               </Button>
-              <Button icon={ShareMinor} size="medium" onClick={toggleActive}>
+              <Button icon={ShareMinor} size="medium" onClick={saveLink}>
                 Share
               </Button>
             </ButtonGroup>
@@ -252,18 +249,11 @@ const NominationList: React.FC<INominations> = ({
             </Button>
           </ButtonGroup>
         </Card.Section>
-        <Card.Section title={urlIds?.length === 0 ? "Titles" : lnameFromUrl}>
-          {usersFromUrl?.length > 0 ? (
-            <TextStyle variation="subdued">
-              By {usersFromUrl?.join(", ")}
-            </TextStyle>
+        <Card.Section title={listName}>
+          {users?.length > 0 ? (
+            <TextStyle variation="subdued">{users?.join(", ")}</TextStyle>
           ) : (
-            <TextStyle variation="subdued">
-              <span role="img" aria-label="cross">
-                ❎
-              </span>{" "}
-              Remove nominations if you change your mind about a choice.
-            </TextStyle>
+            <TextStyle variation="subdued">{user}</TextStyle>
           )}
 
           {nominations.map((title: ITitleData) => (
