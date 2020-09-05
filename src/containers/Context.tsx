@@ -30,17 +30,17 @@ const Context: React.FC = () => {
   );
   const client = useApolloClient();
   const searchTimeout = useRef<number | null>(null);
-  const idsFromUrl = qs
+  const { current: idsFromUrl } = useRef(qs
     .parse(window.location.search)
     ["?imdbID"]?.toString()
-    .split(",");
+    .split(","));
 
-  const usersFromUrl = qs
+  const { current: usersFromUrl } = useRef(qs
     .parse(window.location.search)
     ["users"]?.toString()
-    .split(",");
+    .split(","));
 
-  const lnameFromUrl = qs.parse(window.location.search)["lname"]?.toString();
+  const { current: lnameFromUrl } = useRef(qs.parse(window.location.search)["lname"]?.toString());
 
   /**
    *  https://github.com/lodash/lodash/blob/master/debounce.js
