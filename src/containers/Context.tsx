@@ -14,8 +14,12 @@ import qs from "querystring";
 const Context: React.FC = () => {
   const [title, setTitle] = useState("");
   const [user, setUser] = useState("");
-  const [users, setUsers] = useState<Array<string>>([]);
-  const [listTitle, setListTitle] = useState("");
+  const [users, setUsers] = useState<Array<string>>(
+    (JSON.parse(localStorage.getItem("users") || "[]") as Array<string>) || []
+  );
+  const [listTitle, setListTitle] = useState<string>(
+    localStorage["listName"] ? localStorage["listName"] : ""
+  );
   const [nominations, setNominations] = useState<Array<ITitleData>>(
     (JSON.parse(localStorage.getItem("nominations") || "[]") as Array<
       ITitleData
@@ -89,18 +93,13 @@ const Context: React.FC = () => {
     if (idsFromUrl?.length > 0) {
       getExistingIds(idsFromUrl); // make API calls for each id and setNominations to array from the ids
     }
-  }, [
-    nominations,
-    idsFromUrl,
-    getExistingIds,
-    setNominations,
-    user,
-    listTitle,
-    setUsers,
-    setListTitle,
-    usersFromUrl,
-    lnameFromUrl,
-  ]);
+    // if (usersFromUrl?.length > 0) {
+    //   setUsers(usersFromUrl);
+    // }
+    // if (lnameFromUrl !== "") {
+    //   setListTitle(lnameFromUrl);
+    // }
+  }, [getExistingIds, idsFromUrl, usersFromUrl, lnameFromUrl]);
 
   return (
     <Layout>
