@@ -14,12 +14,8 @@ import qs from "querystring";
 const Context: React.FC = () => {
   const [title, setTitle] = useState("");
   const [user, setUser] = useState("");
-  const [users, setUsers] = useState<Array<string>>(
-    (JSON.parse(localStorage.getItem("users") || "[]") as Array<string>) || []
-  );
-  const [listTitle, setListTitle] = useState<string>(
-    localStorage["listName"] ? localStorage["listName"] : ""
-  );
+  const [users, setUsers] = useState<Array<string>>([]);
+  const [listTitle, setListTitle] = useState<string>("");
   const [nominations, setNominations] = useState<Array<ITitleData>>(
     (JSON.parse(localStorage.getItem("nominations") || "[]") as Array<
       ITitleData
