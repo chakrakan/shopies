@@ -18,7 +18,7 @@ const Context: React.FC = () => {
     (JSON.parse(localStorage.getItem("users") || "[]") as Array<string>) || []
   );
   const [listTitle, setListTitle] = useState<string>(
-    localStorage["listName"] ? localStorage["listName"] : ""
+    localStorage.getItem("listName") || ""
   );
   const [nominations, setNominations] = useState<Array<ITitleData>>(
     (JSON.parse(localStorage.getItem("nominations") || "[]") as Array<
@@ -129,12 +129,9 @@ const Context: React.FC = () => {
             nominations={nominations}
             setNominations={setNominations}
             urlIds={idsFromUrl}
-            usersFromUrl={usersFromUrl}
             user={user}
             users={users}
-            setUsers={setUsers}
             listName={listTitle}
-            lnameFromUrl={lnameFromUrl}
             setUserName={setUser}
             setListName={setListTitle}
           ></NominationList>

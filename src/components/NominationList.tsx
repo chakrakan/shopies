@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import {
   Card,
   Button,
@@ -31,10 +31,7 @@ interface INominations {
   urlIds: Array<string>;
   user: string;
   users: Array<string>;
-  usersFromUrl: Array<string>;
-  setUsers: Function;
   listName: string;
-  lnameFromUrl: string;
   setUserName: Function;
   setListName: Function;
 }
@@ -45,19 +42,18 @@ const NominationList: React.FC<INominations> = ({
   urlIds,
   user,
   users,
-  setUsers,
-  lnameFromUrl,
-  usersFromUrl,
   listName,
   setUserName,
   setListName,
 }) => {
   const [collapsibleActive, setCollapsibleActive] = useState(false);
+  const { current: lname } = useRef(listName);
 
   const handleCollapsibleToggle = useCallback(
     () => setCollapsibleActive(active => !active),
     []
   );
+
   /**
    * Remove a nomination from the nominations state
    * @param id ID of said title to be removed
@@ -111,7 +107,7 @@ const NominationList: React.FC<INominations> = ({
     if (nominations.length <= 5) {
       localStorage.setItem("nominations", JSON.stringify(nominations));
       localStorage.setItem("users", JSON.stringify(usersQueryValue));
-      localStorage.setItem("listName", listName);
+      localStorage.setItem("listName", listName === undefined ? "" : listName);
     }
     togglePinActive();
   }, [nominations, users, listName, togglePinActive, user]);
@@ -164,7 +160,7 @@ const NominationList: React.FC<INominations> = ({
       <Card title="Nominations" sectioned>
         {nominations.length === 5 ? (
           <Banner status="success">
-            <p>You have finalized 5 nominations!</p>
+            <p>Finalized 5 nominations!</p>
           </Banner>
         ) : (
           <></>
@@ -255,9 +251,9 @@ const NominationList: React.FC<INominations> = ({
             </Button>
           </ButtonGroup>
         </Card.Section>
-        <Card.Section title={listName}>
+        <Card.Section title={listName !== undefined ? listName : lname}>
           {users?.length > 0 ? (
-            <TextStyle variation="subdued">{users?.join(", ")}</TextStyle>
+            <TextStyle variation="subdued">By {users?.join(", ")}</TextStyle>
           ) : (
             <TextStyle variation="subdued">{user}</TextStyle>
           )}
