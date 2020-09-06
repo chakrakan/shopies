@@ -96,7 +96,10 @@ const Context: React.FC = () => {
     if (usersFromUrl?.length > 0) {
       setUsers(usersFromUrl);
     }
-  }, [getExistingIds, idsFromUrl, usersFromUrl]);
+    if (lnameFromUrl !== "") {
+      setListTitle(lnameFromUrl);
+    }
+  }, [getExistingIds, idsFromUrl, usersFromUrl, lnameFromUrl]);
 
   return (
     <Layout>

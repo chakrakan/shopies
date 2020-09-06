@@ -139,7 +139,7 @@ const ResultList: React.FC<IResultList> = ({
               <TextStyle variation="subdued">({title.Year})</TextStyle>
             </h3>
             <div>
-              <Badge size="small" status="info">
+              <Badge size="small" status="warning">
                 {title.Type}
               </Badge>
             </div>
