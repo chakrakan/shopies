@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import {
   Card,
   Button,
@@ -47,7 +47,7 @@ const NominationList: React.FC<INominations> = ({
   setListName,
 }) => {
   const [collapsibleActive, setCollapsibleActive] = useState(false);
-  // const { current: lname } = useRef(listName);
+  const { current: lname } = useRef(listName);
 
   const handleCollapsibleToggle = useCallback(
     () => setCollapsibleActive(active => !active),
@@ -251,9 +251,9 @@ const NominationList: React.FC<INominations> = ({
             </Button>
           </ButtonGroup>
         </Card.Section>
-        <Card.Section title={listName}>
+        <Card.Section title={listName !== undefined ? listName : lname}>
           {users?.length > 0 ? (
-            <TextStyle variation="subdued">{users?.join(", ")}</TextStyle>
+            <TextStyle variation="subdued">By {users?.join(", ")}</TextStyle>
           ) : (
             <TextStyle variation="subdued">{user}</TextStyle>
           )}
