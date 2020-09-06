@@ -91,7 +91,10 @@ const Context: React.FC = () => {
     if (idsFromUrl?.length > 0) {
       getExistingIds(idsFromUrl); // make API calls for each id and setNominations to array from the ids
     }
-    if (usersFromUrl?.length > 0) {
+    if (
+      usersFromUrl?.length > 0 &&
+      usersFromUrl[usersFromUrl?.length - 1] !== ""
+    ) {
       setUsers(usersFromUrl);
     }
     if (lnameFromUrl !== "") {
