@@ -160,7 +160,7 @@ const NominationList: React.FC<INominations> = ({
       <Card title="Nominations" sectioned>
         {nominations.length === 5 ? (
           <Banner status="success">
-            <p>You have finalized 5 nominations!</p>
+            <p>Finalized 5 nominations!</p>
           </Banner>
         ) : (
           <></>

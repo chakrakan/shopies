@@ -11,8 +11,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm install
-RUN npm install react-scripts@3.4.3 -g
-RUN npm install typescript
+RUN npm install react-scripts -g
 
 # add app
 COPY . ./
