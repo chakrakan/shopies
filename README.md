@@ -9,8 +9,6 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![Netlify Status](https://api.netlify.com/api/v1/badges/ddeaf393-3831-4e27-a43f-bbd30bed518b/deploy-status)](https://app.netlify.com/sites/shopies-kanisk/deploys)
 
-
-
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -30,38 +28,67 @@
 
 - [Table of Contents](#table-of-contents)
 - [About The Project](#about-the-project)
-  - [The Ingredients](#the-ingredients)
+  - [Use Case scenario](#use-case-scenario)
+  - [Foreward & tools utilized](#foreward--tools-utilized)
+  - [Features](#features)
 - [Running Locally](#running-locally)
   - [Option 1: Using Docker](#option-1-using-docker)
   - [Option 2: Clone + Setup + Run](#option-2-clone--setup--run)
-- [Features](#features)
 - [Contact](#contact)
 - [Resources and acknowledgements](#resources-and-acknowledgements)
-
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+Shopies is a project realized for Shopify's UI & Web Development Intern Challenge. 
+
+> We need a webpage that can search OMDB for movies, and allow the user to save their favourite films they feel should be up for nomination. When they've selected 5 nominees they should be notified they're finished.
+
+> We'd like a simple to use interface that makes it easy to:
+>  - Search OMDB and display the results (movies only)
+>  - Add a movie from the search results to our nomination list
+>  - View the list of films already nominated 
+>  - Remove a nominee from the nomination list
+
+The technical requirements for the above implementation were as follows:
+
+- Search results should come from OMDB's API (free API key: http://www.omdbapi.com/apikey.aspx).
+- Each search result should list at least its title, year of release and a button to nominate that film.
+- Updates to the search terms should update the result list
+- Movies in search results can be added and removed from the nomination list.
+- If a search result has already been nominated, disable its nominate button.
+- Display a banner when the user has 5 nominations.
+
+I treated the whole process of building the application from a usability perspective instead of just trying to cater to core functionality. You can find the Kan-ban board for the project [here]((https://github.com/chakrakan/shopies/projects).
+
+### Use Case scenario
+
+I envisioned a scenario where avid movie buffs at Shopify would use this app internally to nominate their picks for [Oscar season](https://en.wikipedia.org/wiki/Oscar_season), make predictions, and have an internal draw of the most popular/nominated movie title. Additionally, the more I read through documentation and blogs, it became clear to me that 
+
+### Foreward & tools utilized
+
+Coming from a background of primarily working with statically typed, compiled languages, I felt it was imperative to dive straight into what was to be expected of me at work if I were to join Shopify as an intern.
 
 
-
-
-### The Ingredients
-
-Coming from a background of primarily working with statically typed, compiled langauges like Java, C++ etc. I felt it was imperative to dive straight into what is to be expected of me at work if I were to join Shopify as an intern. Upon reading various blogs by the dev team at Shopify, and as clearly stated on the [job posting ](https://www.shopify.com/careers/developer-internships-data-science-internships-winter-2021-826aeb)
+Upon reading various blogs by the web dev teams at Shopify, and as clearly stated on the [job posting](https://www.shopify.com/careers/developer-internships-data-science-internships-winter-2021-826aeb)
 
 > Our Web Developers use modern technologies and frameworks like Typescript, React, GraphQL and Apollo to develop large front-end web applications that scale and perform well on all devices.
 
-Hence, this application uses:
+I decided to try and encompass as much of the aforementioned technologies as possible. Therefore this app uses:
 
 * [Create React App](https://create-react-app.dev/) to bootstrap a [React](https://reactjs.org/) app with the [TypeScript](https://www.typescriptlang.org/) template
 * [Apollo Client](https://github.com/apollographql/apollo-client) with [GraphQL](https://graphql.org/) for making queries and API requests to OMDB.
+* [Husky, Prettier, Pretty-fast](https://prettier.io/docs/en/precommit.html) as a precommit hook to "prettify" staged files before commit to maintain code format consistency
   
-Further, I initially thought of resorting to bootstrap or material UI for the design aspect, but 
+For the UI, I initially thought of resorting to [Semantic UI](https://semantic-ui.com/) or [Ant Design](). But upon further reading, I found Shopify has their own design system - therefore, without hesitation, I utilized  [Polaris](https://polaris.shopify.com/) for the components and design for the application.
 
+Every tool mentioned above was completely new for me - a lot hours spent sifting through documentation for this project and I must say, I thoroughly enjoyed the outcome, and came out of it learning A LOT in a short span of time!
 
+<!-- Features -->
+### Features
+
+Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 <!-- GETTING STARTED -->
 ## Running Locally
@@ -74,9 +101,9 @@ or
 
 ### Option 1: Using Docker
 
-If you have Docker installed, you can simply pull the no hassle [production image](https://hub.docker.com/repository/docker/chakrakan/shopies/general) directly from Docker Hub:
+If you have Docker and the cli tools installed, you can simply use the no hassle deployed [production image](https://hub.docker.com/repository/docker/chakrakan/shopies/general), produced using using the config files present within the repo:
 
-1. Pull the image
+1. Open up your terminal and type the following to pull the image
 ```sh
 docker pull chakrakan/shopies:prod
 ```
@@ -87,7 +114,6 @@ docker run -it --rm -p 1337:80 chakrakan/shopies:prod
 3. Visit `localhost:1337` to see the app served by NGINX web server
 
 ### Option 2: Clone + Setup + Run
-
 
 1. Clone the repo and ensure you're in the default branch
 ```sh
@@ -106,10 +132,6 @@ REACT_APP_BASE_API=https://www.omdbapi.com/
 4. Start the development server using `npm start` and visit `localhost:3000` to see it running.
 
 
-<!-- Features -->
-## Features
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 <!-- CONTACT -->
 ## Contact
