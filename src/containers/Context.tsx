@@ -13,6 +13,13 @@ import qs from "querystring";
  */
 const Context: React.FC = () => {
   const [title, setTitle] = useState("");
+  const [user, setUser] = useState("");
+  const [users, setUsers] = useState<Array<string>>(
+    (JSON.parse(localStorage.getItem("users") || "[]") as Array<string>) || []
+  );
+  const [listTitle, setListTitle] = useState<string>(
+    localStorage["listName"] ? localStorage["listName"] : ""
+  );
   const [nominations, setNominations] = useState<Array<ITitleData>>(
     (JSON.parse(localStorage.getItem("nominations") || "[]") as Array<
       ITitleData
@@ -23,10 +30,17 @@ const Context: React.FC = () => {
   );
   const client = useApolloClient();
   const searchTimeout = useRef<number | null>(null);
-  const idsFromUrl = qs
-    .parse(window.location.search)
-    ["?imdbID"]?.toString()
-    .split(",");
+  const { current: idsFromUrl } = useRef(
+    qs.parse(window.location.search)["?imdbID"]?.toString().split(",")
+  );
+
+  const { current: usersFromUrl } = useRef(
+    qs.parse(window.location.search)["users"]?.toString().split(",")
+  );
+
+  const { current: lnameFromUrl } = useRef(
+    qs.parse(window.location.search)["listname"]?.toString()
+  );
 
   /**
    *  https://github.com/lodash/lodash/blob/master/debounce.js
@@ -52,34 +66,40 @@ const Context: React.FC = () => {
   const getExistingIds = useCallback(
     (idArray: Array<string>) => {
       Promise.all(
-        idArray.map(async (idx) => {
+        idArray.map(async idx => {
           const titleData: ITitleData = await client
             .query<ITitleIdData, ITitleGetVar>({
               query: GET_TITLE,
               variables: { id: idx },
             })
-            .then((resp) => {
+            .then(resp => {
               return resp.data?.title;
             })
-            .catch((err) => err);
+            .catch(err => err);
 
           return titleData;
         })
-      ).then((titleDatas) => {
+      ).then(titleDatas => {
         setNominations(titleDatas);
       });
     },
     [client]
   );
 
+  console.log(listTitle);
+
   useEffect(() => {
-    // updateURL(nominations);
-    // initialize localstorage with empty nominations field
     // if a URL with ids is passed and the app wasn't used before (0 prior nominations)
     if (idsFromUrl?.length > 0) {
       getExistingIds(idsFromUrl); // make API calls for each id and setNominations to array from the ids
     }
-  }, [nominations, idsFromUrl, getExistingIds, setNominations]);
+    if (usersFromUrl?.length > 0) {
+      setUsers(usersFromUrl);
+    }
+    if (lnameFromUrl !== "") {
+      setListTitle(lnameFromUrl);
+    }
+  }, [getExistingIds, idsFromUrl, usersFromUrl, lnameFromUrl]);
 
   return (
     <Layout>
@@ -108,6 +128,14 @@ const Context: React.FC = () => {
             nominations={nominations}
             setNominations={setNominations}
             urlIds={idsFromUrl}
+            usersFromUrl={usersFromUrl}
+            user={user}
+            users={users}
+            setUsers={setUsers}
+            listName={listTitle}
+            lnameFromUrl={lnameFromUrl}
+            setUserName={setUser}
+            setListName={setListTitle}
           ></NominationList>
         )}
       </Layout.Section>
