@@ -93,7 +93,6 @@ const NominationList: React.FC<INominations> = ({
     });
 
     let updatedURL = basePath + "?" + queryString;
-    console.log(updatedURL);
     navigator.clipboard.writeText(updatedURL);
     toggleActive();
   }, [nominations, listName, users, toggleActive, user]);

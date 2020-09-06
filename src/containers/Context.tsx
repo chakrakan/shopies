@@ -86,8 +86,6 @@ const Context: React.FC = () => {
     [client]
   );
 
-  console.log(listTitle);
-
   useEffect(() => {
     // if a URL with ids is passed and the app wasn't used before (0 prior nominations)
     if (idsFromUrl?.length > 0) {
