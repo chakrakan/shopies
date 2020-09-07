@@ -42,7 +42,7 @@
   - [Option 1: Using Docker](#option-1-using-docker)
   - [Option 2: Clone + Setup + Run](#option-2-clone--setup--run)
 - [Contact](#contact)
-- [Resources and acknowledgements](#resources-and-acknowledgements)
+- [Resources](#resources)
 
 
 <!-- ABOUT THE PROJECT -->
@@ -125,7 +125,7 @@ So without much ado, here are the features I implemented keeping the aforementio
 
 ### Extra Features Implementation
 
-In line with **consideration** and **empowerment**, I wanted to ensure all aditional featuers are not forced onto the user and remain opt-in. The user has the flexibility to incorporate them as they perform core functionalities.
+In line with **enablement** and **empowerment**, I wanted to ensure all aditional featuers are not forced onto the user and remain opt-in. The user has the flexibility to incorporate them as they perform core functionalities.
 
 **Personalization** 
 
@@ -212,7 +212,7 @@ If you have any questions or concerns, or just want to say hi, you can find me u
 Check out the deployed project at [shopies-kanisk.netlify.app/](https://shopies-kanisk.netlify.app/)
 
 <!-- ACKNOWLEDGEMENTS -->
-## Resources and acknowledgements
+## Resources
 
 In an attempt to not clutter the README, the full exhaustive list of resources used to build this app is avaiable in the [Project Wiki](https://github.com/chakrakan/shopies/wiki). Also, shoutout to [@jharrilim](https://github.com/jharrilim) for helping clarify my questions and concerns as I traversed new technology.
 
