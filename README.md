@@ -70,7 +70,7 @@ Shopies is a project realized for Shopify's UI & Web Development Intern Challeng
 
 ## My Approach
 
-The app, per se, is fairly simple with no complex moving parts which is why I treated the whole process of building it from a real-world usability perspective - thinking of why anyone would want such a tool and what use-cases/scenarios would such an app be beneficial in. 
+The app, per se, has no complex, moving parts which is why I treated the whole process of building it from a real-world usability perspective - thinking why anyone would want such a tool and what use-cases/scenarios would such an app be beneficial in. 
 
 Getting 5 nominations and having a banner display is cool - but **"what can we do further with this?"** was the question I seeked to answer with my process. 
 
