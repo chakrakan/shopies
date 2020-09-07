@@ -19,8 +19,6 @@
     <img alt="Netlify Deploy Status" src="https://api.netlify.com/api/v1/badges/ddeaf393-3831-4e27-a43f-bbd30bed518b/deploy-status">
     <img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed-raw/chakrakan/shopies?style=flat-square">
     <img alt="GitHub closed pull requests" src="https://img.shields.io/github/issues-pr-closed-raw/chakrakan/shopies?style=flat-square">
-    <a href="https://linkedin.com/in/kaniskc">
-    <img alt="Linked-In" src="https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555"></a>
     <a href="https://github.com/chakrakan/shopies/wiki">
     <img alt="Project Wiki" src="https://img.shields.io/badge/-project%20wiki-blue"></a>
     <a href="https://github.com/chakrakan/shopies/projects">
@@ -119,7 +117,7 @@ So without much ado, here are the features I implemented keeping the aforementio
 - **debounced** Search function to optimize number of API calls made to fetch data as user types
 - Apollo InMemoryCache utility to cache request data and images being fetched
 - Banner upon 5 nominations + disable search bar and nomination buttons to prevent users from adding/searching more movies
-- Have design adhere to the one provided in the instructions with the addition of a logo
+- Have design adhere to the one provided in the instructions with the addition of a logo, simple animations, and toasts for notifications.
 
 > ToDO: add gif of basic usage
 
