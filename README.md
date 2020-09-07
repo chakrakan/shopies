@@ -131,7 +131,11 @@ Who, what, why?
 
 Let's add some flare to the nominations list that you've personally curated. This is akin to making a Spotify playlist. You can then choose a `title` for the list, and add your `name` as a curator!
 
-> ToDO: Personalization demo
+> Personalization is entirely application state based. As such, no changes are saved unless the user wants it saved using pinning or sharing.
+
+<p align="center">
+    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="personalization-demo" width="453" height="235">
+</p>
 
 **Sharing** 
 
@@ -139,13 +143,23 @@ With **collaboration** & **engagement** in mind, I wanted to make building nomin
 
 With `share`, a user can build upon a list, add details if they want, and simply click `Share` to receive a link which they can further send out to others to collaborate on, or to simply provide an overview of their nominations. If collaborating, this can be chained by multiple users up until 5 total nominations are reached, so choose wisely!
 
-> ToDO: Sharing demo
+> Sharing is done using URL manipulation and parsing. Almost using the URL like a database 🤔
+
+<p align="center">
+    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="sharing-demo" width="453" height="235">
+</p>
 
 **Pinning**
 
 Okay so you start working on a list but have an urgent meeting to tend to - no worries, simply pin the current state of the building process you're at, and it'll be there for you when you come back to the app! 
 
 Or maybe John collaborated with Lisa to make that really cool list of movies you've always wanted to watch and you wanted maintain access to it - no problem, "pin that for the weekend dawg!"
+
+> Pinning uses localStorage to store the state of the current application to your browser and persist it even after you close it.
+
+<p align="center">
+    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="pinning-demo" width="453" height="235">
+</p>
 
 **Downloading**
 
@@ -155,7 +169,15 @@ Pro-tip: To make your life easier, you can tell all the users to download their 
 
 💍 _One nomination to rule them all, one nomination to find_ the best movie for movie-night! 
 
-> ToDO: Download demo
+<p align="center">
+    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="download-demo" width="453" height="235">
+</p>
+
+Apart from these features, I also wanted to optimize my site to pass all lighthouse audits as a benchmark for optimal work done. 
+
+<p align="center">
+    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="lighthouse-audit" width="453" height="235">
+</p>
 
 <!-- GETTING STARTED -->
 ## Running Locally
