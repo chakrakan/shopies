@@ -78,6 +78,12 @@ With the direction in mind, I had to pick out my tools of the trade.
 
 ### Tools 
 
+<img align="left" alt="React" width="50px" height="50px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" />
+<img align="left" alt="React" width="50px" height="50px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" />
+<img align="left" alt="React" width="50px" height="50px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/graphql/graphql.png" />
+<img align="left" alt="Node.js" width="50px" height="50px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png" />
+
+
 Coming from a background of primarily working with statically typed, compiled languages, I felt it was imperative to dive straight into what was to be expected of me at work if I were to join Shopify as an intern.
 
 Upon reading various blogs by the web dev teams at Shopify, and as clearly stated on the job posting
@@ -176,7 +182,7 @@ Pro-tip: To make your life easier, you can tell all the users to download their 
 Apart from these features, I also wanted to optimize my site to pass all lighthouse audits as a benchmark for optimal work done. 
 
 <p align="center">
-    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="lighthouse-audit" width="453" height="235">
+    <img src="https://github.com/chakrakan/shopies/blob/react-ts/docs/lighthouse-report.png" alt="lighthouse-audit" width="400" height="235">
 </p>
 
 <!-- GETTING STARTED -->
