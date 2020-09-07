@@ -132,7 +132,7 @@ So without much ado, here are the features I implemented keeping the aforementio
 
 In line with **enablement** and **empowerment**, I wanted to ensure all aditional features are not *forced* onto the user and remain *opt-in*. The user has the flexibility to incorporate them as they perform core functionalities.
 
-**Personalization** 
+**1. Personalization** 
 
 Who, what, why? 
 
@@ -144,7 +144,7 @@ Let's add some flare to the nominations list that you've personally curated. Thi
     <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="personalization-demo" width="453" height="235">
 </p>
 
-**Sharing** 
+**2. Sharing** 
 
 With **collaboration** & **engagement** in mind, I wanted to make building nominations exactly that - a collaborative and engaging experience. 
 
@@ -156,7 +156,7 @@ With `share`, a user can build upon a list, add details if they want, and simply
     <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="sharing-demo" width="453" height="235">
 </p>
 
-**Pinning**
+**3. Pinning**
 
 Okay so you start working on a list but have an urgent meeting to tend to - no worries, simply pin the current state of the building process you're at, and it'll be there for you when you come back to the app! 
 
@@ -168,7 +168,7 @@ Or maybe John collaborated with Lisa to make that really cool list of movies you
     <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="pinning-demo" width="453" height="235">
 </p>
 
-**Downloading**
+**4. Downloading**
 
 You're planning the next movie-night at Shopify but those lame mixed answer surveys and confusing slack polls ain't cutting it. What you _actually_ want to do is write up a script to read in people's nominations that they've gathered using this app and tally up the most popular nomination.
 
@@ -180,7 +180,7 @@ Pro-tip: To make your life easier, you can tell all the users to download their 
     <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="download-demo" width="453" height="235">
 </p>
 
-Apart from these features, I also wanted to optimize my site to pass all lighthouse audits as a benchmark for optimal work done. 
+> Apart from these features, I also wanted to optimize my site to pass all lighthouse audits as a benchmark for optimal work done. 
 
 <p align="center">
     <img src="https://github.com/chakrakan/shopies/blob/react-ts/docs/lighthouse-report.png" alt="lighthouse-audit" width="300" height="400">
