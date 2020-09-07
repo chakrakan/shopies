@@ -70,7 +70,7 @@ Shopies is a project realized for Shopify's UI & Web Development Intern Challeng
 
 ## My Approach
 
-The app, per se, is fairly simple with no complex moving parts which is why I treated the whole process of building it from a real-world usability perspective - thinking of why anyone would want such a tool and what use-cases/scenarios would such an app be beneficial in. 
+The app, per se, has no complex, moving parts which is why I treated the whole process of building it from a real-world usability perspective - thinking why anyone would want such a tool and what use-cases/scenarios would such an app be beneficial in. 
 
 Getting 5 nominations and having a banner display is cool - but **"what can we do further with this?"** was the question I seeked to answer with my process. 
 
@@ -78,11 +78,12 @@ With the direction in mind, I had to pick out my tools of the trade.
 
 ### Tools 
 
-<img align="left" alt="React" width="50px" height="50px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" />
-<img align="left" alt="React" width="50px" height="50px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" />
-<img align="left" alt="React" width="50px" height="50px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/graphql/graphql.png" />
-<img align="left" alt="Node.js" width="50px" height="50px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png" />
-
+<p align="center">
+  <img alt="React" width="100px" height="100px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" />
+  <img alt="React" width="100px" height="100px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" />
+  <img alt="React" width="100px" height="100px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/graphql/graphql.png" />
+  <img alt="Node.js" width="100px" height="100px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png" />
+</p>
 
 Coming from a background of primarily working with statically typed, compiled languages, I felt it was imperative to dive straight into what was to be expected of me at work if I were to join Shopify as an intern.
 
@@ -106,6 +107,10 @@ With the tools at hand, I began refining the Use case scenario.
 
 ### Use Case Scenario & Features
 
+<p align="center">
+    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/oscar-goes-to.png" alt="download-demo" width="400" height="150">
+</p>
+
 As a movie buff myself, I envisioned a scenario where fellow movie buffs at Shopify would use this app as a "just for fun" tool internally to nominate their picks for [Oscar season](https://en.wikipedia.org/wiki/Oscar_season), and have a draw of the most popular/nominated movie title by the employees. 
 
 This can be further used to dictate which movie gets played during movie-nights/social events (okay, it's a bit farfetched but bare with me 😅).
@@ -125,13 +130,15 @@ So without much ado, here are the features I implemented keeping the aforementio
 - Banner upon 5 nominations + disable search bar and nomination buttons to prevent users from adding/searching more movies
 - Have design adhere to the one provided in the instructions with the addition of a logo, simple animations, and toasts for notifications.
 
-> ToDO: add gif of basic usage
+<p align="center">
+    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/basic-feature.gif" alt="basic-feature-demo">
+</p>
 
 ### Extra Features Implementation
 
-In line with **enablement** and **empowerment**, I wanted to ensure all aditional featuers are not forced onto the user and remain opt-in. The user has the flexibility to incorporate them as they perform core functionalities.
+In line with **enablement** and **empowerment**, I wanted to ensure all aditional features are not *forced* onto the user and remain *opt-in*. The user has the flexibility to incorporate them as they perform core functionalities.
 
-**Personalization** 
+**1. Personalization** 
 
 Who, what, why? 
 
@@ -140,22 +147,10 @@ Let's add some flare to the nominations list that you've personally curated. Thi
 > Personalization is entirely application state based. As such, no changes are saved unless the user wants it saved using pinning or sharing.
 
 <p align="center">
-    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="personalization-demo" width="453" height="235">
+    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/personalization-demo.gif" alt="personalization-demo">
 </p>
 
-**Sharing** 
-
-With **collaboration** & **engagement** in mind, I wanted to make building nominations exactly that - a collaborative and engaging experience. 
-
-With `share`, a user can build upon a list, add details if they want, and simply click `Share` to receive a link which they can further send out to others to collaborate on, or to simply provide an overview of their nominations. If collaborating, this can be chained by multiple users up until 5 total nominations are reached, so choose wisely!
-
-> Sharing is done using URL manipulation and parsing. Almost using the URL like a database 🤔
-
-<p align="center">
-    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="sharing-demo" width="453" height="235">
-</p>
-
-**Pinning**
+**2. Pinning**
 
 Okay so you start working on a list but have an urgent meeting to tend to - no worries, simply pin the current state of the building process you're at, and it'll be there for you when you come back to the app! 
 
@@ -164,10 +159,22 @@ Or maybe John collaborated with Lisa to make that really cool list of movies you
 > Pinning uses localStorage to store the state of the current application to your browser and persist it even after you close it.
 
 <p align="center">
-    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="pinning-demo" width="453" height="235">
+    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/pinning-demo.gif" alt="pinning-demo">
 </p>
 
-**Downloading**
+**3. Sharing** 
+
+With **collaboration** & **engagement** in mind, I wanted to make building nominations exactly that - a collaborative and engaging experience. 
+
+With `share`, a user can build upon a list, add details if they want, and simply click `Share` to receive a link which they can further send out to others to collaborate on, or to simply provide an overview of their nominations. If collaborating, this can be chained by multiple users up until 5 total nominations are reached, so choose wisely!
+
+> Sharing is done using URL manipulation and parsing. Almost using the URL like a database 🤔
+
+<p align="center">
+    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/sharing-demo.gif" alt="sharing-demo">
+</p>
+
+**4. Downloading**
 
 You're planning the next movie-night at Shopify but those lame mixed answer surveys and confusing slack polls ain't cutting it. What you _actually_ want to do is write up a script to read in people's nominations that they've gathered using this app and tally up the most popular nomination.
 
@@ -176,13 +183,13 @@ Pro-tip: To make your life easier, you can tell all the users to download their 
 💍 _One nomination to rule them all, one nomination to find_ the best movie for movie-night! 
 
 <p align="center">
-    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="download-demo" width="453" height="235">
+    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/download-demo.gif" alt="download-demo">
 </p>
 
-Apart from these features, I also wanted to optimize my site to pass all lighthouse audits as a benchmark for optimal work done. 
+> Apart from these features, I also wanted to optimize my site to pass all lighthouse audits as a benchmark for optimal work done. 
 
 <p align="center">
-    <img src="https://github.com/chakrakan/shopies/blob/react-ts/docs/lighthouse-report.png" alt="lighthouse-audit" width="400" height="235">
+    <img src="https://github.com/chakrakan/shopies/blob/react-ts/docs/lighthouse-report.png" alt="lighthouse-audit" width="300" height="400">
 </p>
 
 <!-- GETTING STARTED -->
