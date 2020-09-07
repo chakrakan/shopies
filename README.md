@@ -130,7 +130,7 @@ So without much ado, here are the features I implemented keeping the aforementio
 
 ### Extra Features Implementation
 
-In line with **enablement** and **empowerment**, I wanted to ensure all aditional featuers are not forced onto the user and remain opt-in. The user has the flexibility to incorporate them as they perform core functionalities.
+In line with **enablement** and **empowerment**, I wanted to ensure all aditional features are not *forced* onto the user and remain *opt-in*. The user has the flexibility to incorporate them as they perform core functionalities.
 
 **Personalization** 
 
