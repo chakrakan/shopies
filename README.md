@@ -182,7 +182,7 @@ Pro-tip: To make your life easier, you can tell all the users to download their 
 Apart from these features, I also wanted to optimize my site to pass all lighthouse audits as a benchmark for optimal work done. 
 
 <p align="center">
-    <img src="https://github.com/chakrakan/shopies/blob/react-ts/docs/lighthouse-report.png" alt="lighthouse-audit" width="400" height="235">
+    <img src="https://github.com/chakrakan/shopies/blob/react-ts/docs/lighthouse-report.png" alt="lighthouse-audit" width="300" height="400">
 </p>
 
 <!-- GETTING STARTED -->
