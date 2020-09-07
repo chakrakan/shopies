@@ -108,7 +108,7 @@ With the tools at hand, I began refining the Use case scenario.
 ### Use Case Scenario & Features
 
 <p align="center">
-    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/oscar-goes-to.png" alt="download-demo" width="400" height="150">
+    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/oscar-goes-to.png" alt="oscar-img" width="400" height="150">
 </p>
 
 As a movie buff myself, I envisioned a scenario where fellow movie buffs at Shopify would use this app as a "just for fun" tool internally to nominate their picks for [Oscar season](https://en.wikipedia.org/wiki/Oscar_season), and have a draw of the most popular/nominated movie title by the employees. 
