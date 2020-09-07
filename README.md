@@ -36,8 +36,8 @@
 - [My Approach](#my-approach)
   - [Tools](#tools)
   - [Use Case Scenario & Features](#use-case-scenario--features)
-  - [**`Core Functionality Implementation`**](#core-functionality-implementation)
-  - [**`Extra Features Implementation`**](#extra-features-implementation)
+  - [Core Functionality Implementation](#core-functionality-implementation)
+  - [Extra Features Implementation](#extra-features-implementation)
 - [Running Locally](#running-locally)
   - [Option 1: Using Docker](#option-1-using-docker)
   - [Option 2: Clone + Setup + Run](#option-2-clone--setup--run)
@@ -114,7 +114,7 @@ Additionally, the more I read through Shopify docs and blogs, it became clear to
 
 So without much ado, here are the features I implemented keeping the aforementioned in mind...
 
-### **`Core Functionality Implementation`**
+### Core Functionality Implementation
 
 - **debounced** Search function to optimize number of API calls made to fetch data as user types
 - Apollo InMemoryCache utility to cache request data and images being fetched
@@ -123,7 +123,7 @@ So without much ado, here are the features I implemented keeping the aforementio
 
 > ToDO: add gif of basic usage
 
-### **`Extra Features Implementation`**
+### Extra Features Implementation
 
 In line with **consideration** and **empowerment**, I wanted to ensure all aditional featuers are not forced onto the user and remain opt-in. The user has the flexibility to incorporate them as they perform core functionalities.
 
