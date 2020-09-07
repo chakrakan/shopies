@@ -11,7 +11,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/chakrakan/shopies/">
-    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="Logo" width="100" height="100">
+    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="Logo" width="453" height="235">
   </a>
 
 
@@ -35,7 +35,9 @@
 - [About The Project](#about-the-project)
 - [My Approach](#my-approach)
   - [Tools](#tools)
-  - [Use Case scenario & Features](#use-case-scenario--features)
+  - [Use Case Scenario & Features](#use-case-scenario--features)
+  - [**`Core Functionality Implementation`**](#core-functionality-implementation)
+  - [**`Extra Features Implementation`**](#extra-features-implementation)
 - [Running Locally](#running-locally)
   - [Option 1: Using Docker](#option-1-using-docker)
   - [Option 2: Clone + Setup + Run](#option-2-clone--setup--run)
@@ -80,11 +82,13 @@ With the direction in mind, I had to pick out my tools of the trade.
 
 Coming from a background of primarily working with statically typed, compiled languages, I felt it was imperative to dive straight into what was to be expected of me at work if I were to join Shopify as an intern.
 
-Upon reading various blogs by the web dev teams at Shopify, and as clearly stated on the [job posting](https://www.shopify.com/careers/developer-internships-data-science-internships-winter-2021-826aeb)
+Upon reading various blogs by the web dev teams at Shopify, and as clearly stated on the job posting
 
 > Our Web Developers use modern technologies and frameworks like Typescript, React, GraphQL and Apollo to develop large front-end web applications that scale and perform well on all devices.
 
-I decided to try and encompass as much of the aforementioned technologies as possible. Therefore this app uses:
+I decided to try and encompass as much of the aforementioned technologies as possible. 
+
+Therefore this app uses:
 
 * [Create React App](https://create-react-app.dev/) to bootstrap a [React](https://reactjs.org/) app with the [TypeScript](https://www.typescriptlang.org/) template along with React Hooks and functional style of writing code
 * [Apollo Client](https://github.com/apollographql/apollo-client) with [GraphQL](https://graphql.org/) for making queries and API requests to OMDB.
@@ -92,13 +96,15 @@ I decided to try and encompass as much of the aforementioned technologies as pos
   
 For the UI, I initially thought of resorting to [Semantic UI](https://semantic-ui.com/) or [Ant Design](https://ant.design/). But upon further reading, I found Shopify has their own design system called [Polaris](https://polaris.shopify.com/) and so, without hesitation, utilized it for the components and design for the application.
 
-> Every tool mentioned above was completely new for me - a lot hours spent sifting through documentation for this project ([check wiki](https://github.com/chakrakan/shopies/wiki)) and I must say, I thoroughly enjoyed the outcome, and came out of it learning A LOT in a short span of time!
+> Every tool mentioned above was completely new for me - a lot hours spent sifting through documentation for this project ([wiki](https://github.com/chakrakan/shopies/wiki)) and I must say, I thoroughly enjoyed the outcome, and came out of it learning A LOT in a short span of time!
 
 With the tools at hand, I began refining the Use case scenario.
 
-### Use Case scenario & Features
+### Use Case Scenario & Features
 
-As a movie buff myself, I envisioned a scenario where fellow movie buffs at Shopify would use this app as a "just for fun" tool internally to nominate their picks for [Oscar season](https://en.wikipedia.org/wiki/Oscar_season), and have a draw of the most popular/nominated movie title by the employees. This can be further used to dictate which movie gets played during movie-nights/social events (okay, it's a bit farfetched but bare with me 😅).
+As a movie buff myself, I envisioned a scenario where fellow movie buffs at Shopify would use this app as a "just for fun" tool internally to nominate their picks for [Oscar season](https://en.wikipedia.org/wiki/Oscar_season), and have a draw of the most popular/nominated movie title by the employees. 
+
+This can be further used to dictate which movie gets played during movie-nights/social events (okay, it's a bit farfetched but bare with me 😅).
 
 If not at Shopify, I also figured this could be a tool that users can, in general, pick nominations on, and then tally up the information somehow to create a consensus of sorts. 
 
@@ -108,7 +114,7 @@ Additionally, the more I read through Shopify docs and blogs, it became clear to
 
 So without much ado, here are the features I implemented keeping the aforementioned in mind...
 
-**`Core Functionality Implementation`**
+### **`Core Functionality Implementation`**
 
 - **debounced** Search function to optimize number of API calls made to fetch data as user types
 - Apollo InMemoryCache utility to cache request data and images being fetched
@@ -117,7 +123,7 @@ So without much ado, here are the features I implemented keeping the aforementio
 
 > ToDO: add gif of basic usage
 
-**`Extra Features Implementation`**
+### **`Extra Features Implementation`**
 
 In line with **consideration** and **empowerment**, I wanted to ensure all aditional featuers are not forced onto the user and remain opt-in. The user has the flexibility to incorporate them as they perform core functionalities.
 
@@ -145,9 +151,9 @@ Or maybe John collaborated with Lisa to make that really cool list of movies you
 
 **Downloading**
 
-You're planning the next movie-night at Shopify but those lame mixed answer surveys and confusing slack polls ain't cutting it. What you _actually_ want to do is write up a script in ruby, javascript, or python to read in people's nominations that they've gathered using this app and tally up the most popular nomination.
+You're planning the next movie-night at Shopify but those lame mixed answer surveys and confusing slack polls ain't cutting it. What you _actually_ want to do is write up a script to read in people's nominations that they've gathered using this app and tally up the most popular nomination.
 
-To make your life easier, you can tell all the users to download their nominations directly from the app and send in the JSON files to you. 
+Pro-tip: To make your life easier, you can tell all the users to download their nominations directly from the app and send in the JSON files to you. 
 
 💍 _One nomination to rule them all, one nomination to find_ the best movie for movie-night! 
 
@@ -198,9 +204,12 @@ REACT_APP_BASE_API=https://www.omdbapi.com/
 <!-- CONTACT -->
 ## Contact
 
-If you have any questions or concerns, or just want to say hi, you can reach out to me at [Linked-In](https://linkedin.com/in/kaniskc) or via e-mail `dev.kanisk@gmail.com`
+If you have any questions or concerns, or just want to say hi, you can find me using:
+
+- [Linked-In](https://linkedin.com/in/kaniskc) 
+- Email `dev.kanisk@gmail.com`
  
-Deployed Project: [shopies-kanisk.netlify.app/](https://shopies-kanisk.netlify.app/)
+Check out the deployed project at [shopies-kanisk.netlify.app/](https://shopies-kanisk.netlify.app/)
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Resources and acknowledgements
