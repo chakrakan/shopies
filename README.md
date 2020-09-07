@@ -130,7 +130,9 @@ So without much ado, here are the features I implemented keeping the aforementio
 - Banner upon 5 nominations + disable search bar and nomination buttons to prevent users from adding/searching more movies
 - Have design adhere to the one provided in the instructions with the addition of a logo, simple animations, and toasts for notifications.
 
-> ToDO: add gif of basic usage
+<p align="center">
+    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/basic-feature.gif" alt="basic-feature-demo">
+</p>
 
 ### Extra Features Implementation
 
@@ -145,22 +147,10 @@ Let's add some flare to the nominations list that you've personally curated. Thi
 > Personalization is entirely application state based. As such, no changes are saved unless the user wants it saved using pinning or sharing.
 
 <p align="center">
-    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="personalization-demo" width="453" height="235">
+    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/personalization-demo.gif" alt="personalization-demo">
 </p>
 
-**2. Sharing** 
-
-With **collaboration** & **engagement** in mind, I wanted to make building nominations exactly that - a collaborative and engaging experience. 
-
-With `share`, a user can build upon a list, add details if they want, and simply click `Share` to receive a link which they can further send out to others to collaborate on, or to simply provide an overview of their nominations. If collaborating, this can be chained by multiple users up until 5 total nominations are reached, so choose wisely!
-
-> Sharing is done using URL manipulation and parsing. Almost using the URL like a database 🤔
-
-<p align="center">
-    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="sharing-demo" width="453" height="235">
-</p>
-
-**3. Pinning**
+**2. Pinning**
 
 Okay so you start working on a list but have an urgent meeting to tend to - no worries, simply pin the current state of the building process you're at, and it'll be there for you when you come back to the app! 
 
@@ -169,7 +159,19 @@ Or maybe John collaborated with Lisa to make that really cool list of movies you
 > Pinning uses localStorage to store the state of the current application to your browser and persist it even after you close it.
 
 <p align="center">
-    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="pinning-demo" width="453" height="235">
+    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/pinning-demo.gif" alt="pinning-demo">
+</p>
+
+**3. Sharing** 
+
+With **collaboration** & **engagement** in mind, I wanted to make building nominations exactly that - a collaborative and engaging experience. 
+
+With `share`, a user can build upon a list, add details if they want, and simply click `Share` to receive a link which they can further send out to others to collaborate on, or to simply provide an overview of their nominations. If collaborating, this can be chained by multiple users up until 5 total nominations are reached, so choose wisely!
+
+> Sharing is done using URL manipulation and parsing. Almost using the URL like a database 🤔
+
+<p align="center">
+    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/sharing-demo.gif" alt="sharing-demo">
 </p>
 
 **4. Downloading**
@@ -181,7 +183,7 @@ Pro-tip: To make your life easier, you can tell all the users to download their 
 💍 _One nomination to rule them all, one nomination to find_ the best movie for movie-night! 
 
 <p align="center">
-    <img src="https://github.com/chakrakan/shopies/blob/react-ts/src/assets/shopies-logo-v5.png" alt="download-demo" width="453" height="235">
+    <img src="https://github.com/chakrakan/shopies/blob/feat/docedit/docs/download-demo.gif" alt="download-demo">
 </p>
 
 > Apart from these features, I also wanted to optimize my site to pass all lighthouse audits as a benchmark for optimal work done. 
