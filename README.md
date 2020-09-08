@@ -101,7 +101,7 @@ Therefore this app uses:
   
 For the UI, I initially thought of resorting to [Semantic UI](https://semantic-ui.com/) or [Ant Design](https://ant.design/). But upon further reading, I found Shopify has their own design system called [Polaris](https://polaris.shopify.com/) and so, without hesitation, utilized it for the components and design for the application.
 
-> Every tool mentioned above was completely new for me - a lot hours spent sifting through documentation for this project ([wiki](https://github.com/chakrakan/shopies/wiki)) and I must say, I thoroughly enjoyed the outcome, and came out of it learning A LOT in a short span of time!
+> Every tool mentioned above was completely new for me - a lot of hours spent sifting through documentation for this project ([wiki](https://github.com/chakrakan/shopies/wiki)) and I must say, I thoroughly enjoyed the outcome, and came out of it learning A LOT in a short span of time!
 
 With the tools at hand, I began refining the Use case scenario.
 
@@ -128,7 +128,7 @@ So without much ado, here are the features I implemented keeping the aforementio
 - **debounced** Search function to optimize number of API calls made to fetch data as user types
 - Apollo InMemoryCache utility to cache request data and images being fetched
 - Banner upon 5 nominations + disable search bar and nomination buttons to prevent users from adding/searching more movies
-- Have design adhere to the one provided in the instructions with the addition of a logo, simple animations, and toasts for notifications.
+- Have design adhere to the one provided in the instructions with the addition of a logo, simple animations, custom favicon (free from icons8), and toasts for notifications.
 
 <p align="center">
     <img src="https://github.com/chakrakan/shopies/blob/react-ts/docs/basic-feature.gif" alt="basic-feature-demo">
