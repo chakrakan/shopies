@@ -37,7 +37,7 @@
   - [Core Functionality Implementation](#core-functionality-implementation)
   - [Extra Features Implementation](#extra-features-implementation)
 - [Running Locally](#running-locally)
-  - [Option 1: Using Docker](#option-1-using-docker)
+  - [Option 1: Using Docker](#option-1-using-docker-)
   - [Option 2: Clone + Setup + Run](#option-2-clone--setup--run)
 - [Contact](#contact)
 - [Resources](#resources)
