@@ -8,7 +8,7 @@
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "11.0.4",
     "@types/node": "12.12.62",
-    "@types/react": "16.9.50",
+    "@types/react": "16.9.51",
     "@types/react-dom": "16.9.8",
     "apollo-link-rest": "0.8.0-beta.0",
     "graphql": "15.3.0",
