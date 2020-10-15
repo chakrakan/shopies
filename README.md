@@ -154,7 +154,7 @@ Let's add some flare to the nominations list that you've personally curated. Thi
 
 Okay so you start working on a list but have an urgent meeting to tend to - no worries, simply pin the current state of the building process you're at, and it'll be there for you when you come back to the app! 
 
-Or maybe John collaborated with Lisa to make that really cool list of movies you've always wanted to watch and you wanted maintain access to it - no problem, "pin that for the weekend dawg!"
+Or maybe John collaborated with Lisa to make that really cool list of movies you've always wanted to watch and you wanted maintain access to it - no problem, "pin that for the weekend!"
 
 > Pinning uses localStorage to store the state of the current application to your browser and persist it even after you close it.
 
